@@ -1,16 +1,58 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<title>Page Title</title>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTTP Fundamentals — Home</title>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+  <!-- Shared navbar (consistent on every page) -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="brand">HTTP Fundamentals</div>
+      <nav id="main-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="concepts.html">Key Concepts</a></li>
+          <li><a href="http-methods.html">HTTP Methods</a></li>
+          <li><a href="status-codes.html">Status Codes</a></li>
+          <li><a href="references.html">References</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
 
-<h1 style="color:brown;">First Heading</h1>
-<h2 style="color:mediumblue;">Second Heading</h2>
-<h3 style="color: mediumseagreen">Third Heading</h3>
-<p style="background-color: tomato;">Ethos</p>
-<p style="background-color: aqua;">Pathos</p>
-<p style="background-color: springgreen;">Logos</p>
+  <main class="container">
+    <section class="hero">
+      <div class="panel">
+        <h1>Hypertext Transfer Protocol (HTTP)</h1>
+        <p class="lead">A concise, student-built primer: what HTTP is, how it works (request/response), why it is stateless, how HTTPS protects transport, and what versions and status codes mean in practice.</p>
+        <ul>
+          <li><strong>Key Terms</strong>: Request, Response, Method, Header, Status Code, Stateless, HTTPS/TLS, Versions</li>
+          <li><strong>Goal</strong>: Provide a clear learning path, examples, and credible resources.</li>
+        </ul>
+      </div>
+      <img src="assets/img/hero.jpg" alt="Stylized network diagram representing HTTP request and response">
+    </section>
 
+    <section class="panel">
+      <h2>Table of Contents</h2>
+      <div class="toc-grid">
+        <a class="card" href="concepts.html"><h3>Key Concepts</h3><p class="lead">5–7 core ideas: statelessness, headers, HTTPS, versions…</p></a>
+        <a class="card" href="http-methods.html"><h3>HTTP Methods</h3><p class="lead">GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS…</p></a>
+        <a class="card" href="status-codes.html"><h3>Status Codes</h3><p class="lead">1xx–5xx families with practical notes.</p></a>
+        <a class="card" href="references.html"><h3>References & Resources</h3><p class="lead">RFCs, MDN docs, tutorials.</p></a>
+        <a class="card" href="about.html"><h3>About</h3><p class="lead">Who built this—project purpose and course info.</p></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>This site is a class project for IT 3203. Course website: <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.</p>
+      <p>© 2025 Your Name</p>
+    </div>
+  </footer>
 </body>
 </html>
