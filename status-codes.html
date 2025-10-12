@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Status Codes — HTTP Fundamentals</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="brand">HTTP Fundamentals</div>
+      <nav id="main-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="concepts.html">Key Concepts</a></li>
+          <li><a href="http-methods.html">HTTP Methods</a></li>
+          <li><a href="status-codes.html" aria-current="page">Status Codes</a></li>
+          <li><a href="references.html">References</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="panel">
+      <h1>Status Code Families</h1>
+      <table>
+        <caption>Overview of 1xx–5xx Classes</caption>
+        <thead><tr><th>Family</th><th>Meaning</th><th>Common Examples</th><th>Developer Action</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge">1xx</span></td><td>Informational</td><td>100 Continue</td><td>Proceed as advised</td></tr>
+          <tr><td><span class="badge">2xx</span></td><td>Success</td><td>200 OK, 201 Created</td><td>Use returned result</td></tr>
+          <tr><td><span class="badge">3xx</span></td><td>Redirection</td><td>301 Moved, 302 Found, 304 Not Modified</td><td>Follow Location / cache rules</td></tr>
+          <tr><td><span class="badge">4xx</span></td><td>Client Error</td><td>400 Bad Request, 401, 403, 404</td><td>Fix the request</td></tr>
+          <tr><td><span class="badge">5xx</span></td><td>Server Error</td><td>500, 502 Bad Gateway, 503</td><td>Retry later / investigate server</td></tr>
+        </tbody>
+      </table>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>This site is a class project for IT 3203. <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.</p>
+      <p>© 2025 Your Name</p>
+    </div>
+  </footer>
+</body>
+</html>
