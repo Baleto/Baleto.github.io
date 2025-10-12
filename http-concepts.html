@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Key Concepts — HTTP Fundamentals</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="brand">HTTP Fundamentals</div>
+      <nav id="main-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="concepts.html" aria-current="page">Key Concepts</a></li>
+          <li><a href="http-methods.html">HTTP Methods</a></li>
+          <li><a href="status-codes.html">Status Codes</a></li>
+          <li><a href="references.html">References</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="panel">
+      <h1>Core Concepts</h1>
+      <ol>
+        <li><strong>Application Layer Role.</strong> HTTP operates at the application layer, enabling web clients and servers to exchange data using a standardized request/response model.</li>
+        <li><strong>Statelessness.</strong> Each request is independent. State is carried by tokens/cookies rather than the protocol itself.</li>
+        <li><strong>Request & Response.</strong> A request line + headers + optional body; the server replies with a status line + headers + optional body.</li>
+        <li><strong>Headers.</strong> Metadata that governs behavior (e.g., <span class="kbd">Content-Type</span>, <span class="kbd">Authorization</span>, <span class="kbd">Cache-Control</span>).</li>
+        <li><strong>HTTP vs HTTPS.</strong> HTTPS is HTTP over TLS, providing confidentiality, integrity, and server authenticity.</li>
+        <li><strong>Versions.</strong> HTTP/1.1 (persistent connections), HTTP/2 (binary framing/multiplexing), HTTP/3 (QUIC/UDP transport).</li>
+        <li><strong>Caching (Brief).</strong> Validators and cache directives reduce latency and bandwidth when used correctly.</li>
+      </ol>
+      <blockquote>
+        “HTTP is a stateless request/response protocol.” 
+        <footer>— Standard HTTP semantics</footer>
+      </blockquote>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>This site is a class project for IT 3203. <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.</p>
+      <p>© 2025 Your Name</p>
+    </div>
+  </footer>
+</body>
+</html>
