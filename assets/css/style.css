@@ -1,3 +1,9 @@
+/* =========================================================
+   IT 3203 — HTTP Fundamentals Site (Single stylesheet)
+   Clean, accessible, responsive. Grid + Flex demonstrated.
+   ========================================================= */
+
+/* ---- Tokens / Reset ---- */
 *,
 *::before,
 *::after { box-sizing: border-box; }
