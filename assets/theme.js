@@ -7,7 +7,7 @@ function apply(theme) {
   try { localStorage.setItem(KEY, theme); } catch {}
 }
 
-export function initTheme() {
+function initTheme() {
   try {
     const saved = localStorage.getItem(KEY);
     if (saved) return apply(saved);
@@ -16,17 +16,18 @@ export function initTheme() {
   apply(prefersDark ? 'dark' : 'light');
 }
 
-export function toggleTheme() {
+function toggleTheme() {
   const current = root.getAttribute('data-theme') || 'dark';
   apply(current === 'dark' ? 'light' : 'dark');
 }
 
-// Init on page load
+// Initialize on page load
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initTheme);
 } else {
   initTheme();
 }
 
-// Optional: expose a quick helper for DevTools:
-// window.setTheme = apply;
+// Make functions callable from HTML (works with file://)
+window.toggleTheme = toggleTheme;
+window.initTheme = initTheme;
