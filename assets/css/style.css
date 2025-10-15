@@ -54,7 +54,8 @@ box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 .container { width: min(100%, var(--maxw)); margin-inline: auto; padding: 24px; }
 .navbar {
   position: sticky; top: 0; z-index: 10;
-  background: #0d1020cc; backdrop-filter: blur(6px);
+  background: color-mix(in oklab, var(--bg) 92%, #0d1020 8%);
+  backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--border);
 }
 .navbar-inner {
@@ -83,13 +84,13 @@ box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 table { width: 100%; border-collapse: collapse; font-size: .95rem; }
 caption { text-align: left; color: var(--muted); margin: .25rem 0 .6rem; }
 th, td { padding: .6rem .75rem; border: 1px solid var(--border); text-align: left; }
-th { background: #133a88; color: #fff; }
-tbody tr:nth-child(even){ background: #0f1320; }
+th { background: var(--table-head); color: #fff; }
+tbody tr:nth-child(even){ background: var(--table-stripe); }
 
 blockquote {
   border-left: 4px solid var(--brand);
   padding: .75rem 1rem; margin: 1rem 0;
-  background: #0d1220;
+  background: var(--quote-bg);
   font-style: italic;
 }
 blockquote footer { font-style: normal; color: var(--muted); margin-top: .5rem; }
@@ -98,15 +99,98 @@ label { display: block; margin: .35rem 0 .25rem; }
 input[type="text"], input[type="email"], textarea {
   width: 100%; padding: 12px; margin: 10px 0; box-sizing: border-box;
   border: 1px solid var(--border); border-radius: .5rem;
-  background: #82991ef6; color: var(--ink);
+  background: var(--panel); color: var(--ink);
 }
 input:focus, textarea:focus { outline: 2px solid var(--brand); outline-offset: 2px; }
 
-.kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; background:#0a0e1a; border:1px solid var(--border); padding: 2px 6px; border-radius: 6px; }
-.badge { display:inline-block; padding: 4px 10px; border-radius: 999px; background:#0f1320; border:1px solid var(--border); }
+.kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  background: var(--kbd-bg);
+  color: var(--kbd-ink);
+  border:1px solid var(--border);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+.badge {
+  display:inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--chip-bg);
+  color: var(--chip-ink);
+  border:1px solid var(--border);
+  font-weight: 600;
+  line-height: 1;
+}
 .mt-2{ margin-top:.5rem } .mb-2{ margin-bottom:.5rem } .mb-3{ margin-bottom:1rem }
 
 .site-footer { margin-top: 40px; border-top: 1px solid var(--border); padding: 24px; color: var(--muted); }
 .site-footer a { color: #66ff6b; }
 .site-footer a:hover { color: #8099ed; }
+
+/* === THEME: Light mode tokens === */
+:root[data-theme="light"]{
+  --bg: #ffffff;
+  --panel: #f6f7fb;
+  --ink: #0f172a;
+  --muted: #475569;
+  --brand: #2d6cdf;       /* keep brand */
+  --brand-ink: #ffffff;
+  --accent: #e34f26;      /* keep accent */
+  --border: #e5e7eb;
+
+  /* helpers that differ in light mode */
+  --table-head: #e6eefc;
+  --table-stripe: #f7f9ff;
+  --quote-bg: #eef2ff;
+}
+
+/* Chip / KBD theme tokens */
+:root {
+  --chip-bg: #0f1320;        /* dark pill/bg */
+  --chip-ink: var(--ink);
+  --kbd-bg:  #0a0e1a;        /* dark kbd */
+  --kbd-ink: var(--ink);
+}
+
+:root[data-theme="light"]{
+  --chip-bg: #e6eefc;        /* light pill/bg */
+  --chip-ink: #0f172a;
+  --kbd-bg:  #f3f4f6;        /* light kbd */
+  --kbd-ink: #0f172a;
+}
+
+/* === Helper tokens for both themes (dark defaults) === */
+:root{
+  --table-head: #133a88;   /* was hardcoded in th */
+  --table-stripe: #0f1320; /* was hardcoded in tbody stripe */
+  --quote-bg: #0d1220;     /* was hardcoded in blockquote bg */
+}
+
+/* Smooth cross-theme transitions */
+html, body, .panel, .card, .navbar, .site-footer, table, th, td, blockquote {
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease;
+}
+
+
+/* Accessible skip link (centralized) */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  background: var(--panel);
+  color: var(--ink);
+  padding: .5rem .75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
 

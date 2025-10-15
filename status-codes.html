@@ -1,11 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Status Codes — Fundamentals of HTTP</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <meta name="theme-color" content="#0b0d12">
 </head>
+<a class="skip-link" href="#main">Skip to main content</a>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
   <header class="navbar">
     <div class="navbar-inner">
       <a href="index.html" class="brand">HTTP Fundamentals</a>      
@@ -19,15 +24,26 @@
           <li><a href="about.html">About</a></li>
         </ul>
       </nav>
+      <button class="badge" aria-label="Toggle light/dark theme"
+              onclick="import('./assets/theme.js').then(m=>m.toggleTheme())">
+        🌙 / ☀️ Theme
+      </button>
     </div>
   </header>
 
-  <main class="container">
+  <main id="main" class="container">
     <article class="panel">
       <h1>Status Code Families</h1>
       <table>
         <caption>Overview of 1xx–5xx Classes</caption>
-        <thead><tr><th>Family</th><th>Meaning</th><th>Common Examples</th><th>Developer Action</th></tr></thead>
+        <thead>
+          <tr>
+            <th scope="col">Family</th>
+            <th scope="col">Meaning</th>
+            <th scope="col">Common Examples</th>
+            <th scope="col">Developer Action</th>
+          </tr>
+        </thead>
         <tbody>
           <tr><td><span class="badge">1xx</span></td><td>Informational</td><td>100 Continue</td><td>Proceed as advised</td></tr>
           <tr><td><span class="badge">2xx</span></td><td>Success</td><td>200 OK, 201 Created</td><td>Use returned result</td></tr>
@@ -41,9 +57,13 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>This site is a class project for IT 3203. Our course website is: <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.</p>
+      <p>This site is a class project for IT 3203. Our course website is: 
+        <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.
+      </p>
       <p>© Made in 2025 by Benel Kawata</p>
     </div>
   </footer>
+
+  <script type="module" src="./assets/theme.js"></script>
 </body>
 </html>

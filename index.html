@@ -1,14 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Home - Fundamentals of HTTP</title>
+  <meta name="theme-color" content="#0b0d12">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
+<a class="skip-link" href="#main">Skip to main content</a>
 <body>
-  <header class="navbar">
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="navbar" role="banner">
     <div class="navbar-inner">
       <a href="index.html" class="brand">HTTP Fundamentals</a>
+
       <nav id="main-nav" aria-label="Main">
         <ul>
           <li><a href="index.html" aria-current="page">Home</a></li>
@@ -19,21 +25,34 @@
           <li><a href="about.html">About</a></li>
         </ul>
       </nav>
+
+      <!-- Theme toggle -->
+      <button class="badge" aria-label="Toggle light/dark theme"
+              onclick="import('./assets/theme.js').then(m=>m.toggleTheme())">
+        🌙 / ☀️ Theme
+      </button>
     </div>
   </header>
 
-  <main class="container">
+  <main id="main" class="container">
     <section class="hero">
       <div class="panel">
         <h1>Hypertext Transfer Protocol (HTTP)</h1>
-        <p class="lead"> The blueprint for HTTP was written by Tim Berners-Lee in 1989, as part of the initial proposal for the World Wide Web. However, its official release and implementation occurred in 1991. In essence, HTTP serves as the main canal for data transmission, between clients and servers.</p>
-        <p class="lead"> Most importantly, HTTP differs from the Hypertext Transfer Protocol Secure (HTTPS), in terms of built-in security capacity.</p>
+        <p class="lead">
+          The blueprint for HTTP was written by Tim Berners-Lee in 1989, as part of the initial proposal for the World Wide Web. However, its official release and implementation occurred in 1991. In essence, HTTP serves as the main canal for data transmission, between clients and servers.
+        </p>
+        <p class="lead">
+          Most importantly, HTTP differs from the Hypertext Transfer Protocol Secure (HTTPS), in terms of built-in security capacity.
+        </p>
         <ul>
           <li><strong>Key Terms</strong>: Requests, Responses, Methods, Headers, Status Code, Stateless, HTTPS/TLS (Transport Layer Security), and Versions</li>
           <li><strong>Objective</strong>: The goal of this website is to provide elaborate details about HTTP, accompanied by credible and accessible resources.</li>
         </ul>
       </div>
-      <img src="assets/img/hero.png" alt="Stylized network diagram representing HTTP request and response" class="hero-img">
+
+      <img src="assets/img/hero.png"
+           alt="Stylized diagram of an HTTP request from a client to a server and the response back"
+           class="hero-img">
     </section>
 
     <section class="panel">
@@ -50,9 +69,14 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>This site is a class project for IT 3203. Our course website is: <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.</p>
+      <p>This site is a class project for IT 3203. Our course website is:
+        <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.
+      </p>
       <p>© Made in 2025 by Benel Kawata</p>
     </div>
   </footer>
+
+  <!-- Theme initializer -->
+  <script type="module" src="./assets/theme.js"></script>
 </body>
 </html>
