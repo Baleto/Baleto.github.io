@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <title>Mini Games — Fundamentals of HTTP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0d12" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .site-nav { position: sticky; top: 0; z-index: 50; background: var(--bg); border-bottom: 1px solid var(--border); }
+    .site-nav .wrap { max-width: var(--maxw); margin: 0 auto; padding: 12px 24px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .brand { font-weight: 700; letter-spacing: .3px; }
+    .nav-links { display: flex; gap: 18px; flex: 1 1 auto; flex-wrap: wrap; }
+    .nav-links a { color: var(--brand); text-decoration: none; font-size: .95rem; padding: 6px 2px; border-bottom: 2px solid transparent; }
+    .nav-links a:hover { border-bottom-color: var(--border); background: var(--brand); color: var(--brand-ink); border-radius: 8px; padding: 6px 8px; }
+
+    header.page { padding: 16px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); background: var(--panel); border-top: 1px solid var(--border); }
+    header.page h1 { margin: 0; font-size: 1.25rem; letter-spacing: .3px; }
+
+    main.mg { max-width: var(--maxw); margin: 0 auto; padding: 20px 24px; }
+    .row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+    .console{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 12px; height: 420px; overflow: auto; white-space: pre-wrap; line-height: 1.45;
+    }
+    .io { display: flex; gap: 8px; margin-top: 10px; }
+    .io input { flex: 1; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel); color: var(--ink); }
+    .hint { color: var(--muted); font-size: .9rem; margin-top: 8px; }
+
+    .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .6rem .9rem; border-radius: 10px; border: 1px solid transparent; background: var(--brand); color: var(--brand-ink); cursor: pointer; }
+    .btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--border); }
+    .btn.icon { background: var(--panel); border: 1px solid var(--border); color: var(--ink); }
+    .btn.icon:hover { background: var(--brand); color: var(--brand-ink); }
+    .pill { font-size: .75rem; color: var(--chip-ink); background: var(--chip-bg); padding: 4px 8px; border-radius: 999px; border: 1px solid var(--border); }
+    .spacer { flex: 1 1 auto; }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="navbar site-nav" role="banner">
+    <div class="wrap navbar-inner">
+      <a href="index.html" class="brand">HTTP Fundamentals</a>
+      <nav id="main-nav" aria-label="Main" class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="concepts.html">Key Concepts</a>
+        <a href="http-methods.html">HTTP Methods</a>
+        <a href="status-codes.html">Status Codes</a>
+        <a href="references.html">References</a>
+        <a href="about.html">About</a>
+        <a href="mini-games.html" aria-current="page">Mini Games</a>
+      </nav>
+      <button class="badge" aria-label="Toggle light/dark theme" onclick="toggleTheme()">🌙 / ☀️ Theme</button>
+    </div>
+  </header>
+
+  <header class="page">
+    <h1>🕹️ Mini Games <span class="pill">Vanilla JS</span></h1>
+  </header>
+
+  <main id="main" class="mg">
+    <!-- Game choices -->
+    <div class="row">
+      <button id="btn-gtn"  class="btn icon">🎯 Guess the Number</button>
+      <button id="btn-over" class="btn icon">➕➖ Over / Under</button>
+      <button id="btn-rps"  class="btn icon">✊ ✋ ✌️ Rock • Paper • Scissors</button>
+      <button id="btn-hang" class="btn icon">🔤 Hangman</button>
+      <button id="btn-bj"   class="btn icon">🂡 Blackjack Lite</button>
+    </div>
+
+    <!-- Utilities -->
+    <div class="row">
+      <button id="btn-show"  class="btn ghost">📈 Show Stats</button>
+      <button id="btn-reset" class="btn ghost">🧹 Reset Stats</button>
+      <span class="spacer"></span>
+      <a href="index.html" class="btn">🔙 Back to Home</a>
+    </div>
+
+    <div class="console" id="console" aria-live="polite" aria-label="Arcade console output"></div>
+
+    <div class="io">
+      <input id="stdin" type="text" placeholder="Type here and press Enter (or click Send)" aria-label="Game input" />
+      <button id="btn-send" class="btn">Send</button>
+    </div>
+
+    <p class="hint">Tip: Select a game, and type in the box to input your text. Press <strong>Send</strong> or <b>Enter</b></p>
+  </main>
+
+  <script>
+  // ---------------- UI helpers ----------------
+  const $ = (id)=>document.getElementById(id);
+  const $console = $("console"), $stdin = $("stdin"), $send = $("btn-send");
+
+  function clearConsole(){ $console.textContent = ""; }
+  function print(s=""){ $console.textContent += s.replace(/\r\n/g,"\n"); $console.scrollTop = $console.scrollHeight; }
+  function println(s=""){ print(s + "\n"); }
+
+  // Line-input queue so games can "await input"
+  let queue = [];
+  let pending = null;
+  function takeLine(){
+    if (queue.length) return Promise.resolve(queue.shift());
+    return new Promise(res => { pending = res; });
+  }
+  function enqueue(line){
+    if (pending){ const r = pending; pending = null; r(line); }
+    else queue.push(line);
+  }
+  $send.addEventListener("click", ()=>{
+    const v = $stdin.value;
+    if (!v) return;
+    $stdin.value = "";
+    println(v);
+    enqueue(v);
+    $stdin.focus();
+  });
+  $stdin.addEventListener("keydown", e=>{ if(e.key==="Enter") $send.click(); });
+
+  //Stats (localStorage)
+  const LS_KEY = "arcade.stats.v1";
+  function loadStats(){
+    try { return JSON.parse(localStorage.getItem(LS_KEY)) || freshStats(); } catch { return freshStats(); }
+  }
+  function saveStats(){ localStorage.setItem(LS_KEY, JSON.stringify(stats)); }
+
+  function freshStats(){
+    return {
+      version:1,
+      gtn_user_wins:0, gtn_cpu_wins:0, gtn_best_attempts:null, gtn_current_streak:0, gtn_best_streak:0,
+      over_user_wins:0, over_cpu_wins:0, over_best_streak:0,
+      rps_user_wins:0, rps_cpu_wins:0, rps_best_streak:0,
+      hang_user_wins:0, hang_cpu_wins:0, hang_best_saves:0,
+      bj_user_wins:0, bj_cpu_wins:0, bj_blackjacks:0, bj_best_streak:0,
+    };
+  }
+
+  let stats = loadStats();
+  const inc    = (k,n=1)=>{ stats[k]=(stats[k]||0)+n; };
+  const setmax = (k,v)=>{ const cur=stats[k]; if (cur==null || v>cur) stats[k]=v; };
+  const setmin = (k,v)=>{ const cur=stats[k]; if (cur==null || v<cur) stats[k]=v; };
+
+  function showAllStats(){
+    const bestAtt = stats.gtn_best_attempts==null ? "—" : stats.gtn_best_attempts;
+    println("==================================================");
+    println("🧮 Your Stats");
+    println(`• Guess the Number — Wins: ${stats.gtn_user_wins}, CPU: ${stats.gtn_cpu_wins}, Best Attempts: ${bestAtt}, Best Streak: ${stats.gtn_best_streak}`);
+    println(`• Over/Under       — Wins: ${stats.over_user_wins}, CPU: ${stats.over_cpu_wins}, Best Streak (session): ${stats.over_best_streak}`);
+    println(`• RPS              — Wins: ${stats.rps_user_wins}, CPU: ${stats.rps_cpu_wins}, Best Streak (session): ${stats.rps_best_streak}`);
+    println(`• Hangman          — Wins: ${stats.hang_user_wins}, CPU: ${stats.hang_cpu_wins}, Best Saves: ${stats.hang_best_saves}`);
+    println(`• Blackjack Lite   — Wins: ${stats.bj_user_wins}, CPU: ${stats.bj_cpu_wins}, Blackjacks: ${stats.bj_blackjacks}, Best Streak (session): ${stats.bj_best_streak}`);
+    println("==================================================");
+  }
+  function showGameStats(code){
+    switch(code){
+      case "A": {
+        const bestAtt = stats.gtn_best_attempts==null ? "—" : stats.gtn_best_attempts;
+        println(`Guess the Number — You: ${stats.gtn_user_wins} | CPU: ${stats.gtn_cpu_wins} | Best Attempts: ${bestAtt} | Best Streak: ${stats.gtn_best_streak}`); break;
+      }
+      case "B": println(`Over/Under — You: ${stats.over_user_wins} | CPU: ${stats.over_cpu_wins} | Best Streak (session): ${stats.over_best_streak}`); break;
+      case "C": println(`RPS — You: ${stats.rps_user_wins} | CPU: ${stats.rps_cpu_wins} | Best Streak (session): ${stats.rps_best_streak}`); break;
+      case "D": println(`Hangman — You: ${stats.hang_user_wins} | CPU: ${stats.hang_cpu_wins} | Best Saves: ${stats.hang_best_saves}`); break;
+      case "E": println(`Blackjack Lite — You: ${stats.bj_user_wins} | CPU: ${stats.bj_cpu_wins} | Blackjacks: ${stats.bj_blackjacks} | Best Streak (session): ${stats.bj_best_streak}`); break;
+    }
+  }
+
+  function resetStats(){
+    stats = freshStats();
+    saveStats();
+  }
+
+  //Games (vanilla JS)
+  const rand = (lo, hi)=> Math.floor(Math.random()*(hi-lo+1))+lo;
+
+  async function gameGuessTheNumber(){
+    clearConsole();
+    println("=== Previous Stats ===");
+    showGameStats("A");
+
+    println("\n[A] Guess the Number — (Guess a random number within a range)");
+    println("Choose a range: A) 1–100  B) 2–50  C) 3–15");
+    let r;
+    while(true){
+      print("Type here: ");
+      r = (await takeLine()).trim().toUpperCase();
+      if (["A","B","C"].includes(r)) break;
+      println("Invalid option. Please enter A, B, or C.");
+    }
+    let lowest, highest, label;
+    if (r==="A"){ lowest=1; highest=100; label="1–100"; }
+    else if (r==="B"){ lowest=2; highest=50; label="2–50"; }
+    else { lowest=3; highest=15; label="3–15"; }
+
+    println("\nChoose difficulty: A) Unlimited  B) 5 attempts  C) 3 attempts  D) 1 attempt");
+    let d;
+    while(true){
+      print("Type here: ");
+      d = (await takeLine()).trim().toUpperCase();
+      if (["A","B","C","D"].includes(d)) break;
+      println("Invalid option. Enter A/B/C/D.");
+    }
+    let attempts, Hot_Max, Cold_Max, diffName;
+    if (d==="A"){ attempts=Infinity; Hot_Max=6; Cold_Max=16; diffName="Easy"; }
+    else if (d==="B"){ attempts=5; Hot_Max=5; Cold_Max=15; diffName="Medium"; }
+    else if (d==="C"){ attempts=3; Hot_Max=4; Cold_Max=12; diffName="Hard"; }
+    else { attempts=1; Hot_Max=3; Cold_Max=10; diffName="Impossible"; }
+
+    const secret = rand(lowest, highest);
+    const seen = new Set();
+    let tries = 0;
+
+    println(`\n*** GUESS THE NUMBER! ***  [Range: ${label} | Difficulty: ${diffName}]`);
+    println("(Type 'quit' to leave this game.)");
+    while (tries < attempts){
+      print(`Enter any number between ${lowest} and ${highest}. Type here: `);
+      const raw = (await takeLine()).trim();
+      if (raw.toLowerCase()==="quit"){ println("Returning to menu…"); saveStats(); return; }
+      if (!/^-?\d+$/.test(raw)){ println("Please enter a valid integer."); continue; }
+      const g = parseInt(raw,10);
+      if (g<lowest || g>highest){ println(`Please guess within [${lowest}..${highest}].`); continue; }
+      if (seen.has(g)){ println("Already tried this one!"); continue; }
+      seen.add(g);
+      tries++;
+      const diff = Math.abs(secret-g);
+      if (diff===0){
+        println(`Hot potato! You found the number I was thinking of which is ${secret}!`);
+        inc("gtn_user_wins"); inc("gtn_current_streak");
+        setmax("gtn_best_streak", stats.gtn_current_streak);
+        const prevBest = stats.gtn_best_attempts;
+        setmin("gtn_best_attempts", tries);
+        if (prevBest==null || tries<prevBest) println("🏅 New personal record for fewest attempts!");
+        if (tries===1) println("🔥 Achievement: Speed Demon — guessed in 1 try!");
+        if (stats.gtn_current_streak>=3) println(`💥 Streak: ${stats.gtn_current_streak} wins in a row!`);
+        saveStats();
+        println("\n=== Current Stats ==="); showGameStats("A");
+        return;
+      } else if (diff===1){ println("You're burning! Keep trying!"); }
+      else if (diff<=Hot_Max){ println("You're hot! Keep going!"); }
+      else if (diff<=Cold_Max){ println("You're cold! Don't stop!"); }
+      else { println(g<secret ? "Too low! Go higher!" : "Too high! Go lower!"); }
+    }
+    println(`Out of attempts! The correct number was ${secret}.`);
+    inc("gtn_cpu_wins"); stats.gtn_current_streak=0; saveStats();
+    println("\n=== Current Stats ==="); showGameStats("A");
+  }
+
+  async function gameOverUnder(){
+    clearConsole();
+    println("=== Previous Stats ==="); showGameStats("B");
+
+    println("\n[B] Over/Under — (Get closer to 20 by adding or subtracting)");
+    println("Choose rounds: A) 3   B) 2   C) 1");
+    let r;
+    while(true){
+      print("Type here: ");
+      r = (await takeLine()).trim().toUpperCase();
+      if (["A","B","C"].includes(r)) break;
+      println("Enter A/B/C.");
+    }
+    const rounds = r==="A" ? 3 : r==="B" ? 2 : 1;
+    const TARGET = 20;
+    let sessionStreak = 0;
+
+    for (let i=0;i<rounds;i++){
+      const base = rand(10,25);
+      const add = rand(1,6);
+      const sub = rand(1,6);
+      println(`\nRound ${i+1}/${rounds}`);
+      println(`Options:\n1) Add ${add}\n2) Subtract ${sub}`);
+      print("Type here: ");
+      const choice = (await takeLine()).trim();
+      let final = base;
+      if (choice==="1") final += add;
+      else if (choice==="2") final -= sub;
+      else { println("Invalid choice. CPU takes the round."); inc("over_cpu_wins"); sessionStreak=0; continue; }
+      println(`The original number was ${base}!`);
+      println(`Your final total was ${final}.`);
+
+      const origDiff = Math.abs(TARGET-base);
+      const finalDiff = Math.abs(TARGET-final);
+      if (finalDiff < origDiff){ println("You win this round!"); inc("over_user_wins"); sessionStreak++; }
+      else if (finalDiff > origDiff){ println("CPU wins this round!"); inc("over_cpu_wins"); sessionStreak=0; }
+      else { println("Tie on closeness. CPU takes it! 😅"); inc("over_cpu_wins"); sessionStreak=0; }
+      setmax("over_best_streak", sessionStreak);
+    }
+    if (sessionStreak>=2) println(`🎯 Hot Streak: ${sessionStreak} Over/Under rounds in a row!`);
+    saveStats(); println("\n=== Current Stats ==="); showGameStats("B");
+  }
+
+  async function gameRPS(){
+    clearConsole();
+    println("=== Previous Stats ==="); showGameStats("C");
+
+    println("\n[C] Rock, Paper, Scissors — (Win rounds by choosing R, P, or S)");
+    println("Choose a mode: A) Single Round  B) Best of 3  C) Best of 5");
+    let m;
+    while(true){ print("Type here: "); m=(await takeLine()).trim().toUpperCase(); if(["A","B","C"].includes(m)) break; println("Enter A/B/C."); }
+    let roundsToWin, totalRounds, modeName;
+    if (m==="A"){ roundsToWin=1; totalRounds=1; modeName="Single Round"; }
+    else if (m==="B"){ roundsToWin=2; totalRounds=3; modeName="Best of 3"; }
+    else { roundsToWin=3; totalRounds=5; modeName="Best of 5"; }
+    println(`\n*** ROCK, PAPER, SCISSORS *** [${modeName}] (type 'quit' to exit)`);
+
+    const valid = {R:"Rock", P:"Paper", S:"Scissors"};
+    const beats = {R:"S", P:"R", S:"P"};
+    let you=0, cpu=0, streak=0;
+
+    while(true){
+      print("Your move (R/P/S): ");
+      const raw = (await takeLine()).trim().toUpperCase();
+      if (raw==="QUIT"){ println("Returning to menu…"); saveStats(); return; }
+      if (!valid[raw]){ println("Please enter R, P, or S."); continue; }
+      const cpuPick = ["R","P","S"][rand(0,2)];
+      println(`You chose ${valid[raw]}; CPU chose ${valid[cpuPick]}.`);
+      if (raw===cpuPick){ println("It's a draw."); }
+      else if (beats[raw]===cpuPick){ println("You win this round!"); you++; streak++; }
+      else { println("CPU wins this round!"); cpu++; streak=0; }
+
+      if (totalRounds===1){
+        if (you>cpu){ println("You won the match!"); inc("rps_user_wins"); setmax("rps_best_streak", streak); }
+        else if (cpu>you){ println("CPU won the match!"); inc("rps_cpu_wins"); }
+        else println("Match draw. No one scores.");
+        saveStats(); println("\n=== Current Stats ==="); showGameStats("C"); return;
+      } else {
+        if (you===roundsToWin){
+          println("You won the match!"); inc("rps_user_wins"); setmax("rps_best_streak", streak);
+          if (m==="B" && you===2 && cpu===0) println("🏅 Flawless (Best of 3): 2–0 sweep!");
+          if (m==="C" && you===3 && cpu===0) println("🏅 Flawless (Best of 5): 3–0 sweep!");
+          saveStats(); println("\n=== Current Stats ==="); showGameStats("C"); return;
+        }
+        if (cpu===roundsToWin){ println("CPU won the match!"); inc("rps_cpu_wins"); saveStats(); println("\n=== Current Stats ==="); showGameStats("C"); return; }
+      }
+    }
+  }
+
+  async function gameHangman(){
+    clearConsole();
+    println("=== Previous Stats ==="); showGameStats("D");
+
+    println("\n[D] Hangman — (Guess the hidden word one letter at a time)");
+    println("Choose difficulty: A) 8 wrong  B) 6 wrong  C) 4 wrong");
+    let d;
+    while(true){ print("Type here: "); d=(await takeLine()).trim().toUpperCase(); if(["A","B","C"].includes(d)) break; println("Enter A/B/C."); }
+    let wrongLimit, diffName;
+    if (d==="A"){ wrongLimit=8; diffName="Easy"; }
+    else if (d==="B"){ wrongLimit=6; diffName="Medium"; }
+    else { wrongLimit=4; diffName="Hard"; }
+
+    const WORDS = ["python","variable","function","module","package","iterator","condition","boolean","integer","float","string","tuple","list","dictionary","hangman","random","persist","stats","arcade","program"];
+    const secret = WORDS[rand(0, WORDS.length-1)];
+    const guessed = new Set(), correct = new Set(), wrong = new Set();
+    let wrongLeft = wrongLimit;
+    const masked = ()=> secret.split("").map(ch => correct.has(ch) ? ch.toUpperCase() : "_").join(" ");
+
+    println(`\n*** HANGMAN *** [${diffName}] (type 'quit' to exit)`);
+    println(`Word: ${masked()}`); println(`Wrong guesses left: ${wrongLeft}`);
+
+    while(true){
+      print("Guess a letter: ");
+      const entry = (await takeLine()).trim().toLowerCase();
+      if (entry==="quit"){ println("Returning to menu…"); saveStats(); return; }
+      if (entry.length!==1 || !/[a-z]/.test(entry)){ println("Please enter a single letter (A–Z)."); continue; }
+      if (guessed.has(entry)){ println("Already guessed that one."); continue; }
+      guessed.add(entry);
+      if (secret.includes(entry)){ println("Correct!"); correct.add(entry); }
+      else { println("Incorrect!"); wrong.add(entry); wrongLeft--; }
+
+      println(`Word: ${masked()}`); println(`Wrong guesses left: ${wrongLeft}`);
+      if (wrong.size) println("Wrong letters: " + [...wrong].sort().join(" ").toUpperCase());
+
+      if (secret.split("").every(ch => correct.has(ch))){
+        println(`You win! The word was: ${secret.toUpperCase()}`);
+        inc("hang_user_wins"); setmax("hang_best_saves", wrongLeft);
+        if (wrongLeft===wrongLimit) println("🏅 Flawless Victory — no wrong guesses!");
+        saveStats(); println("\n=== Current Stats ==="); showGameStats("D"); return;
+      }
+      if (wrongLeft<=0){
+        println(`Out of guesses! The word was: ${secret.toUpperCase()}`);
+        inc("hang_cpu_wins"); saveStats(); println("\n=== Current Stats ==="); showGameStats("D"); return;
+      }
+    }
+  }
+
+  async function gameBlackjack(){
+    clearConsole();
+    println("=== Previous Stats ==="); showGameStats("E");
+
+    println("\n[E] Blackjack Lite — (Beat the dealer without going over 21)");
+    println("Choose mode: A) Single Hand  B) Best of 3  C) Best of 5");
+    let m;
+    while(true){ print("Type here: "); m=(await takeLine()).trim().toUpperCase(); if(["A","B","C"].includes(m)) break; println("Enter A/B/C."); }
+    let roundsToWin, totalRounds, modeName;
+    if (m==="A"){ roundsToWin=1; totalRounds=1; modeName="Single Hand"; }
+    else if (m==="B"){ roundsToWin=2; totalRounds=3; modeName="Best of 3"; }
+    else { roundsToWin=3; totalRounds=5; modeName="Best of 5"; }
+
+    println(`\n*** BLACKJACK LITE *** [${modeName}] (type 'quit' to exit)`);
+    const ranks = ["A","2","3","4","5","6","7","8","9","10","J","Q","K"];
+    const suits = ["♠","♥","♦","♣"];
+    const buildDeck = ()=> {
+      const d=[]; for(const r of ranks) for(const s of suits) d.push([r,s]);
+      for(let i=d.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [d[i],d[j]]=[d[j],d[i]]; }
+      return d;
+    };
+    const handStr = (h, hideFirst=false)=> hideFirst ? "[hidden], " + h.slice(1).map(c=>c[0]+c[1]).join(", ") : h.map(c=>c[0]+c[1]).join(", ");
+    const total = (h)=>{
+      let t=0, aces=0;
+      for(const [r] of h){
+        if (["J","Q","K"].includes(r)) t+=10;
+        else if (r==="A"){ t+=11; aces++; }
+        else t+=parseInt(r,10);
+      }
+      while(t>21 && aces>0){ t-=10; aces--; }
+      return t;
+    };
+
+    let you=0, cpu=0, sessionStreak=0;
+
+    while(true){
+      let deck = buildDeck();
+      let player=[deck.pop(), deck.pop()];
+      let dealer=[deck.pop(), deck.pop()];
+      let pt=total(player), dt=total(dealer);
+
+      println("\nDealing…");
+      println(`Your hand:   ${handStr(player)}  (total: ${pt})`);
+      println(`Dealer hand: ${handStr(dealer,true)}`);
+
+      let roundOver=false;
+      if (pt===21 && dt===21){ println("Both have Blackjack! Push."); roundOver=true; }
+      else if (pt===21){ println("Blackjack! You win!"); inc("bj_user_wins"); inc("bj_blackjacks"); sessionStreak++; you++; roundOver=true; }
+      else if (dt===21){ println("Dealer has Blackjack. CPU wins."); inc("bj_cpu_wins"); sessionStreak=0; cpu++; roundOver=true; }
+
+      while(!roundOver){
+        print("Hit or Stand? (H/S): ");
+        const move = (await takeLine()).trim().toUpperCase();
+        if (move==="QUIT"){ println("Returning to menu…"); saveStats(); return; }
+        if (!["H","S"].includes(move)){ println("Please enter H or S."); continue; }
+        if (move==="H"){
+          player.push(deck.pop()); pt=total(player);
+          println(`You draw: ${player.at(-1)[0]}${player.at(-1)[1]}  → total: ${pt}`);
+          if (pt>21){ println("Bust! CPU wins this round."); inc("bj_cpu_wins"); sessionStreak=0; cpu++; roundOver=true; }
+          continue;
+        }
+        println(`You stand at ${pt}. Dealer reveals: ${handStr(dealer)}  (total: ${dt})`);
+        while(dt<17){ const c=deck.pop(); dealer.push(c); dt=total(dealer); println(`Dealer draws: ${c[0]}${c[1]}  → total: ${dt}`); }
+        if (dt>21){ println("Dealer busts! You win this round!"); inc("bj_user_wins"); sessionStreak++; you++; }
+        else if (pt>dt){ println("You win this round!"); inc("bj_user_wins"); sessionStreak++; you++; }
+        else if (pt<dt){ println("CPU wins this round!"); inc("bj_cpu_wins"); sessionStreak=0; cpu++; }
+        else { println("Push (tie). No one scores this round."); }
+        roundOver=true;
+      }
+      setmax("bj_best_streak", sessionStreak);
+      saveStats();
+
+      if (totalRounds===1){ println("\n=== Current Stats ==="); showGameStats("E"); return; }
+      if (you===roundsToWin){
+        println("You won the match!");
+        if (m==="B" && you===2 && cpu===0) println("🏅 Flawless (Best of 3): 2–0 sweep!");
+        if (m==="C" && you===3 && cpu===0) println("🏅 Flawless (Best of 5): 3–0 sweep!");
+        println("\n=== Current Stats ==="); showGameStats("E"); return;
+      }
+      if (cpu===roundsToWin){ println("CPU won the match!"); println("\n=== Current Stats ==="); showGameStats("E"); return; }
+    }
+  }
+
+  //Wire buttons
+  $("btn-gtn").addEventListener("click", gameGuessTheNumber);
+  $("btn-over").addEventListener("click", gameOverUnder);
+  $("btn-rps").addEventListener("click",  gameRPS);
+  $("btn-hang").addEventListener("click", gameHangman);
+  $("btn-bj").addEventListener("click",   gameBlackjack);
+
+  $("btn-show").addEventListener("click", ()=>{
+    clearConsole();
+    showAllStats();
+  });
+
+  $("btn-reset").addEventListener("click", ()=>{
+    clearConsole();
+    println("[Reset Stats]");
+    println("Type Y to confirm, anything else to cancel.");
+    (async ()=>{
+      print("Type here: ");
+      const v = (await takeLine()).trim().toUpperCase();
+      if (v==="Y"){ resetStats(); println("All stats have been reset."); }
+      else println("Reset cancelled.");
+      showAllStats();
+    })();
+  });
+
+  // Keep console empty on load; focus input for convenience
+  $stdin.focus();
+  </script>
+
+  <script defer src="./assets/theme.js"></script>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>This site is a class project for IT 3203. Our course website is:
+        <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.
+      </p>
+      <p>© Made in 2025 by Benel Kawata</p>
+    </div>
+  </footer>
+</body>
+</html>
