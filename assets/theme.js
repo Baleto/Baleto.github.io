@@ -1,5 +1,5 @@
-// assets/theme.js
-const KEY = "theme";                          // localStorage key
+//assets/theme.js
+const KEY = "theme";//localStorage key
 const THEMES = new Set(["light", "dark"]);
 const root = document.documentElement;
 
@@ -14,12 +14,12 @@ function valid(theme) {
 }
 
 function setColorScheme(theme) {
-  // Helps native form controls match the theme
+//Helps native form controls match the theme
   root.style.colorScheme = theme === "dark" ? "dark" : "light";
 }
 
 function syncMetaThemeColor() {
-  // Keep browser UI (mobile address bar) in sync with current bg
+//Keep browser UI (mobile address bar) in sync with current bg
   const meta = document.querySelector('meta[name="theme-color"]');
   if (!meta) return;
   const bg = getComputedStyle(document.body || root).backgroundColor;
@@ -33,9 +33,9 @@ function apply(theme, { persist = true } = {}) {
   if (persist) {
     try { localStorage.setItem(KEY, theme); } catch {}
   }
-  // Notify any listeners (e.g., components that need to restyle)
+//Notify any listeners (e.g., components that need to restyle)
   root.dispatchEvent(new CustomEvent("themechange", { detail: { theme } }));
-  // Try to align browser UI color
+//Try to align browser UI color
   if (document.readyState !== "loading") syncMetaThemeColor();
 }
 
@@ -48,7 +48,7 @@ function storedTheme() {
 function initTheme() {
   const saved = storedTheme();
   const theme = valid(saved) ? saved : (systemPrefersDark() ? "dark" : "light");
-  apply(theme, { persist: !!saved }); // persist only if user had an explicit choice
+  apply(theme, { persist: !!saved });//persist only if the user had an explicit choice
 }
 
 function toggleTheme() {
@@ -57,7 +57,7 @@ function toggleTheme() {
 }
 
 function setTheme(theme) {
-  // programmatic setter (e.g., future UI with three options)
+//programmatic setter (e.g., future UI with three options)
   if (valid(theme)) apply(theme);
 }
 
