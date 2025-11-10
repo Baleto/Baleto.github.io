@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <title>SEOs — Fundamentals of HTTP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="navbar site-nav" role="banner">
+    <div class="wrap navbar-inner">
+      <a href="index.html" class="brand">Fundamentals of HTTP</a>
+      <nav id="main-nav" aria-label="Main" class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="concepts.html">Key Concepts</a>
+        <a href="http-methods.html">HTTP Methods</a>
+        <a href="status-codes.html">Status Codes</a>
+        <a href="seos.html" aria-current="page">SEOs</a>
+        <a href="cookies.html">Cookies</a>
+        <a href="quiz-section.html">Quiz</a>
+        <a href="references.html">References</a>
+        <a href="about.html">About</a>
+      </nav>
+      <button class="badge" aria-label="Toggle light/dark theme" onclick="toggleTheme()">🌙 / ☀️ Theme</button>
+    </div>
+  </header>
+
+  <header class="page">
+    <h1>SEOs — Search Engine Optimization</h1>
+  </header>
+
+  <main class="container prose">
+    <p>Search Engine Optimization (SEO) ensures that pages can be discovered, crawled, and indexed correctly. Also that their content matches the searcher's intent. Below is a quick operator board showing how major search engines handle crawl/index directives.</p>
+
+    <div class="table-wrap" role="region" aria-label="SEO engines board">
+      <table class="table">
+        <thead>
+          <tr>
+            <th><strong>Engine</strong></th>
+            <th><strong>Crawl Agent</strong></th>
+            <th><strong>robots.txt</strong></th>
+            <th><strong>Meta robots</strong></th>
+            <th><strong>Canonical</strong></th>
+            <th><strong>Sitemaps</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Google</td>
+            <td><code>Googlebot</code></td>
+            <td>Respected. Disallow prevents crawling (not indexing if known via links).</td>
+            <td><code>index/noindex</code>, <code>follow/nofollow</code>, <code>noarchive</code> supported.</td>
+            <td>Preferred for duplicate control.</td>
+            <td><code>/sitemap.xml</code> &amp; <code>robots.txt</code> hint.</td>
+          </tr>
+          <tr>
+            <td>Bing</td>
+            <td><code>Bingbot</code></td>
+            <td>Respected similarly to Google.</td>
+            <td>Same core directives. Also supports <code>max-snippet</code>, etc.</td>
+            <td>Supported.</td>
+            <td>Supported; can submit in Bing Webmaster Tools.</td>
+          </tr>
+          <tr>
+            <td>DuckDuckGo</td>
+            <td>(primarily Bing index sources)</td>
+            <td>Respected according to source crawlers.</td>
+            <td>Follows upstream crawler rules.</td>
+            <td>Follows upstream canonical signals.</td>
+            <td>Follows upstream sitemaps.</td>
+          </tr>
+          <tr>
+            <td>Applebot</td>
+            <td><code>Applebot</code></td>
+            <td>Respected.</td>
+            <td>Core directives supported.</td>
+            <td>Supported.</td>
+            <td>Supported.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>Summary.</strong> The use of <code>robots.txt</code> is good to control what gets crawled, not what gets indexed; the use of <code>&lt;meta name="robots"&gt;</code> for indexing and link-follow rules on a per-page basis; declaring a <code>&lt;link rel="canonical"&gt;</code> allows to consolidate duplicates; publishing XML sitemaps makes it possible to advertise discoverable URLs. Having clean information architecture and a good content are parts of the foundation.</p>
+  </main>
+
+  <!-- Footer + Theme -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>This site is a class project for IT 3203. Our course website is:
+        <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.
+      </p>
+      <p>© Made in 2025 by Benel Kawata</p>
+    </div>
+  </footer>
+  <script defer src="assets/theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz Section — Fundamentals of Web Concepts</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    main.container { max-width: var(--maxw); margin: 0 auto; padding: 24px; }
+
+    .quiz-controls { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+    .btn { background: var(--brand); color: var(--brand-ink); border: none; border-radius: 10px; padding: 10px 16px; cursor: pointer; }
+    .btn:hover { opacity: .9; }
+    .btn.ghost { background: transparent; border: 1px solid var(--border); color: var(--ink); }
+
+    .question { margin-bottom: 20px; padding: 16px; border-radius: var(--radius); background: var(--panel); border: 1px solid var(--border); }
+    .question h3 { margin-bottom: 10px; }
+    .choices label { display: block; margin: 4px 0; cursor: pointer; }
+    .choices input { margin-right: 6px; }
+
+    .correct { background: rgba(0, 180, 0, 0.2); border-color: #0f0; }
+    .incorrect { background: rgba(180, 0, 0, 0.2); border-color: #f00; }
+
+    .result-modal {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      background: var(--panel); color: var(--ink); padding: 24px; border-radius: 12px;
+      border: 2px solid var(--border); box-shadow: 0 0 20px rgba(0,0,0,.4); z-index: 200;
+    }
+    .result-modal h2 { margin-top: 0; }
+    .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.6); z-index:150; }
+
+    .hidden { display: none; }
+    .legend { margin-top: 16px; font-size: .9rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="brand">Fundamentals of HTTP</a>
+      <nav id="main-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="concepts.html">Key Concepts</a></li>
+          <li><a href="http-methods.html">HTTP Methods</a></li>
+          <li><a href="status-codes.html">Status Codes</a></li>
+          <li><a href="seo.html">SEOs</a></li>
+          <li><a href="cookies.html">Cookies</a></li>
+          <li><a href="quiz-section.html" aria-current="page">Quiz</a></li>
+          <li><a href="references.html">References</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+      <button class="badge" aria-label="Toggle light/dark theme" onclick="toggleTheme()">🌙 / ☀️ Theme</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1>Interactive Quiz Section</h1>
+    <p class="lead">HTTP (15 questions) • SEOs (15 questions) • Cookies (15 questions) — or the full knowledge check (25 questions).</p>
+
+    <div class="quiz-controls">
+      <button class="btn" onclick="startQuiz('checkpoint')">Knowledge check - Quiz</button>
+      <button class="btn" onclick="startQuiz('http')">Fundamentals of HTTP - Quiz</button>
+      <button class="btn" onclick="startQuiz('seo')">SEOs Fundamentals - Quiz</button>
+      <button class="btn" onclick="startQuiz('cookies')">Cookies Fundamentals - Quiz</button>
+    </div>
+
+    <form id="quizForm" class="hidden">
+      <div id="quizContainer"></div>
+      <button type="button" class="btn" onclick="submitQuiz()">Submit Answers</button>
+      <button type="button" class="btn ghost" onclick="resetQuiz()">Retry</button>
+      <div class="legend hidden" id="legend">Legend: <span style="color:#0f0;">Green = Correct</span>, <span style="color:#f00;">Red = Wrong</span></div>
+    </form>
+  </main>
+
+  <div id="overlay" class="overlay hidden"></div>
+  <div id="resultModal" class="result-modal hidden" role="dialog" aria-modal="true">
+    <h2 id="resultTitle"></h2>
+    <p id="resultMsg"></p>
+    <button class="btn" onclick="closeModal()">Close</button>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>This site is a class project for IT 3203. Course website: <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.</p>
+      <p>© Made in 2025 by Benel Kawata</p>
+    </div>
+  </footer>
+
+  <script defer src="assets/theme.js"></script>
+  <script>
+    const questions = {
+      http: [
+        {q:"What does HTTP stand for?", a:["HyperText Transfer Protocol","HyperText Transmission Path","HyperText Transfer Pathway","High Transfer Text Protocol"], c:0},
+        {q:"Which status code indicates a successful request?", a:["200","404","500","302"], c:0},
+        {q:"Which method is used to retrieve data?", a:["POST","GET","DELETE","PATCH"], c:1},
+        {q:"Which layer of the OSI model does HTTP operate on?", a:["Transport","Network","Application","Session"], c:2},
+        {q:"Which status code represents 'Not Found'?", a:["400","404","403","500"], c:1},
+        {q:"HTTPS adds what feature to HTTP?", a:["Speed","Security","Compression","Caching"], c:1},
+        {q:"Which HTTP method is idempotent?", a:["POST","PUT","DELETE","PATCH"], c:1},
+        {q:"What is the default port for HTTP?", a:["80","21","8080","443"], c:0},
+        {q:"What does a 301 status mean?", a:["Temporary Redirect","Not Modified","Permanent Redirect","Server Error"], c:2},
+        {q:"Which version introduced multiplexing?", a:["1.1","2","3","1.0"], c:1}
+      ],
+      seo: [
+        {q:"What does SEO stand for?", a:["Search Engine Optimization","Search Entry Operation","Server Engine Order","Site Enhancement Option"], c:0},
+        {q:"Which tag helps define a page’s title?", a:["meta","title","header","h1"], c:1},
+        {q:"Which file guides search engine crawlers?", a:["sitemap.xml","robots.txt","index.html","crawl.json"], c:1},
+        {q:"What metric measures how long users stay on a page?", a:["Bounce Rate","Stay Duration","Time-on-Page","Exit Rate"], c:2},
+        {q:"Which search engine is most used globally?", a:["Bing","Google","DuckDuckGo","Yahoo"], c:1},
+        {q:"What does ‘nofollow’ attribute tell search engines?", a:["Do not crawl this page","Do not index link","Follow link normally","Increase priority"], c:1},
+        {q:"Which element describes page summary in results?", a:["meta description","meta keyword","title","header"], c:0},
+        {q:"What is keyword stuffing?", a:["Adding relevant keywords","Overusing keywords","Using hidden links","Using strong tags"], c:1},
+        {q:"Which protocol improves page speed for SEO?", a:["HTTP","HTTPS","FTP","SSH"], c:1},
+        {q:"What is a backlink?", a:["Link from your site to others","Link from another site to yours","Internal link","Meta link"], c:1}
+      ],
+      cookies: [
+        {q:"What are cookies used for?", a:["Track browsing activity","Save user data","Personalize experience","All of the above"], c:3},
+        {q:"Which type of cookie is essential for website function?", a:["Performance","Strictly necessary","Analytics","Advertising"], c:1},
+        {q:"Which cookie type tracks user behavior?", a:["Strictly necessary","Functional","Analytics","Session"], c:2},
+        {q:"Which cookie type helps remember user preferences?", a:["Functional","Necessary","Analytics","Performance"], c:0},
+        {q:"Cookies are stored on the:", a:["Server","User’s browser","DNS","Firewall"], c:1},
+        {q:"What law governs cookie consent in the EU?", a:["GDPR","CAN-SPAM","COPPA","CCPA"], c:0},
+        {q:"Which attribute makes cookies HTTPS-only?", a:["secure","safe","private","httponly"], c:0},
+        {q:"Which of these is NOT a cookie type?", a:["Persistent","Session","Dynamic","Third-party"], c:2},
+        {q:"What is a session cookie?", a:["Expires after session ends","Lasts one year","Tracks ad clicks","Stores passwords"], c:0},
+        {q:"Cookies can be disabled in:", a:["Database","Browser settings","Server logs","CSS"], c:1}
+      ]
+    };
+
+    let currentQuiz = [], currentTopic = "";
+    const form = document.getElementById("quizForm");
+    const container = document.getElementById("quizContainer");
+    const legend = document.getElementById("legend");
+
+    function shuffle(arr){return arr.sort(()=>Math.random()-0.5);}
+    function pickRandom(arr,n){return shuffle([...arr]).slice(0,n);}
+
+    function startQuiz(topic){
+      currentTopic = topic;
+      let set = [];
+      if(topic==="checkpoint"){
+        set = pickRandom([...questions.http, ...questions.seo, ...questions.cookies], 25);
+      } else set = pickRandom(questions[topic], 10);
+      currentQuiz = set;
+      container.innerHTML = "";
+      set.forEach((item,i)=>{
+        const qDiv = document.createElement("div");
+        qDiv.className="question";
+        const q = document.createElement("h3");
+        q.textContent = `${i+1}. ${item.q}`;
+        const cDiv = document.createElement("div");
+        cDiv.className="choices";
+        const shuffled = shuffle(item.a.map((txt,idx)=>({txt,idx})));
+        shuffled.forEach((opt,j)=>{
+          const lbl=document.createElement("label");
+          lbl.innerHTML=`<input type="radio" name="q${i}" value="${opt.idx}"> ${opt.txt}`;
+          cDiv.appendChild(lbl);
+        });
+        qDiv.appendChild(q);
+        qDiv.appendChild(cDiv);
+        container.appendChild(qDiv);
+      });
+      form.classList.remove("hidden");
+      legend.classList.add("hidden");
+    }
+
+    function submitQuiz(){
+      let score=0;
+      const qDivs=document.querySelectorAll(".question");
+      qDivs.forEach((qDiv,i)=>{
+        const sel=qDiv.querySelector("input:checked");
+        const correct=currentQuiz[i].c;
+        if(sel && +sel.value===correct){score++; qDiv.classList.add("correct");}
+        else qDiv.classList.add("incorrect");
+        qDiv.querySelectorAll("input").forEach(inp=>{
+          inp.disabled=true;
+          if(+inp.value===correct) inp.parentElement.style.color="#0f0";
+          else if(sel && +inp.value===+sel.value && +sel.value!==correct) inp.parentElement.style.color="#f00";
+        });
+      });
+      const percent=Math.round((score/currentQuiz.length)*100);
+      const modal=document.getElementById("resultModal");
+      const overlay=document.getElementById("overlay");
+      const title=document.getElementById("resultTitle");
+      const msg=document.getElementById("resultMsg");
+      title.textContent=`Your Score: ${percent}% (${score}/${currentQuiz.length})`;
+      if(percent>=90) msg.textContent="🎉 Congratulations! Outstanding work!";
+      else if(percent>=70) msg.textContent="👏 Well done! You could do even better.";
+      else msg.textContent="📘 You should study more. Keep practicing!";
+      overlay.classList.remove("hidden");
+      modal.classList.remove("hidden");
+      legend.classList.remove("hidden");
+    }
+
+    function closeModal(){
+      document.getElementById("resultModal").classList.add("hidden");
+      document.getElementById("overlay").classList.add("hidden");
+    }
+
+    function resetQuiz(){
+      container.innerHTML="";
+      form.classList.add("hidden");
+      legend.classList.add("hidden");
+      currentQuiz=[];
+    }
+  </script>
+</body>
+</html>

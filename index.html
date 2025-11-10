@@ -1,95 +1,209 @@
 <!doctype html>
 <html lang="en" data-theme="dark">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Home - Fundamentals of HTTP</title>
-  <meta name="theme-color" content="#0b0d12">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <meta name="theme-color" content="#0b0d12" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
-<a class="skip-link" href="#main">Skip to main content</a>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
+  <!-- Header -->
   <header class="navbar site-nav" role="banner">
     <div class="wrap navbar-inner">
-      <a href="index.html" class="brand">HTTP Fundamentals</a>
+      <a href="index.html" class="brand">Fundamentals of HTTP</a>
       <nav id="main-nav" aria-label="Main" class="nav-links">
-        <a href="index.html">Home</a>
+        <a href="index.html" aria-current="page">Home</a>
         <a href="concepts.html">Key Concepts</a>
         <a href="http-methods.html">HTTP Methods</a>
         <a href="status-codes.html">Status Codes</a>
+        <a href="seos.html">SEOs</a>
+        <a href="cookies.html">Cookies</a>
+        <a href="quiz-section.html">Quiz</a>
         <a href="references.html">References</a>
         <a href="about.html">About</a>
-        <a href="mini-games.html" aria-current="page">Mini Games</a>
       </nav>
       <button class="badge" aria-label="Toggle light/dark theme" onclick="toggleTheme()">🌙 / ☀️ Theme</button>
     </div>
   </header>
 
   <main id="main" class="container">
+    <!-- Hero -->
     <section class="hero">
       <div class="panel">
         <h1>Hypertext Transfer Protocol (HTTP)</h1>
         <p class="lead">
-          The blueprint for HTTP was written by Tim Berners-Lee in 1989, as part of the initial proposal for the World Wide Web. However, its official release and implementation occurred in 1991. In essence, HTTP serves as the main canal for data transmission, between clients and servers.
+          The blueprint for HTTP was written by Tim Berners-Lee in 1989 as part of the original Web proposal; the first implementation shipped in 1991. HTTP is the application-layer protocol that carries requests and responses between clients and servers.
         </p>
         <p class="lead">
-          Most importantly, HTTP differs from the Hypertext Transfer Protocol Secure (HTTPS), in terms of built-in security capacity.
+          HTTPS is HTTP over TLS—same semantics, with transport encryption and integrity.
         </p>
         <ul>
-          <li><strong>Key Terms</strong>: Requests, Responses, Methods, Headers, Status Code, Stateless, HTTPS/TLS (Transport Layer Security), and Versions</li>
-          <li><strong>Objective</strong>: The goal of this website is to provide elaborate details about HTTP, accompanied by credible and accessible resources.</li>
+          <li><strong>Key Terms</strong>: Requests, Responses, Methods, Headers, Status Codes, Statelessness, HTTPS/TLS, Versions</li>
+          <li><strong>Objective</strong>: Provide clear, credible explanations and resources about HTTP and adjacent web fundamentals.</li>
         </ul>
       </div>
-
-      <img src="assets/img/hero.png"
-           alt="Stylized diagram of an HTTP request from a client to a server and the response back"
-           class="hero-img">
+      <img
+        src="assets/img/hero.png"
+        alt="Diagram showing an HTTP request from a client to a server and the response back"
+        class="hero-img"
+      />
     </section>
 
-<section class="panel">
-  <h2>Table of Contents</h2>
-  <div class="toc-grid">
-    <a class="card" href="concepts.html">
-      <h3>Key Concepts</h3>
-      <p class="lead">7 core ideas: statelessness, headers, HTTPS, versions…</p>
-    </a>
-    <a class="card" href="http-methods.html">
-      <h3>HTTP Methods</h3>
-      <p class="lead">GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS…</p>
-    </a>
-    <a class="card" href="status-codes.html">
-      <h3>Status Codes</h3>
-      <p class="lead">What the 1xx–5xx classes mean and when they appear.</p>
-    </a>
-    <a class="card" href="references.html">
-      <h3>References & Resources</h3>
-      <p class="lead">RFCs, MDN docs, security guides, and IETF materials.</p>
-    </a>
-    <a class="card" href="about.html">
-      <h3>About</h3>
-      <p class="lead">Some information about the man behind the scene.</p>
-    </a>
-    <a class="card" href="mini-games.html">
-      <h3>🕹️ Mini Games</h3>
-      <p class="lead">A mini game hub from python, playable with statistics.</p>
-    </a>
-  </div>
-</section>
+    <!--Overview slideshow (HTTP • SEOs • Cookies)-->
+    <section class="panel slideshow" aria-labelledby="slideshow-heading">
+      <div class="slideshow-head">
+        <h2 id="slideshow-heading">At-a-glance Overviews</h2>
+        <p class="lead">Swipe/arrow through quick primers that compliment (not duplicate) the full sections.</p>
+      </div>
 
+      <div class="slider" role="region" aria-label="HTTP, SEOs and Cookies overview">
+        <!-- Slides -->
+        <figure class="slide is-active" data-title="HTTP" data-index="0">
+          <img
+            src="assets/img/hero.png"
+            alt="HTTP request/response diagram"
+            loading="lazy"
+          />
+          <figcaption class="slide-caption">
+            <h3>HTTP</h3>
+            <p><strong>Conceived by:</strong> Tim Berners-Lee &amp; CERN (1989 → 1991)</p>
+            <p><strong>What it does:</strong> Defines the request–response semantics for the Web (methods, status codes, headers) so browsers and servers can talk.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" data-title="SEOs" data-index="1">
+          <img
+            src="assets/img/SEO_diagram.png"
+            alt="SEO diagram showing crawling, indexing, and ranking"
+            loading="lazy"
+          />
+          <figcaption class="slide-caption">
+            <h3>SEOs</h3>
+            <p><strong>Driven by:</strong> Search engines (e.g., Google, Bing) &amp; site owners</p>
+            <p><strong>What it does:</strong> Improves discoverability by optimizing how pages are crawled, indexed, and ranked for relevant queries.</p>
+          </figcaption>
+        </figure>
+
+        <figure class="slide" data-title="Cookies" data-index="2">
+          <img
+            src="assets/img/Cookies_diagram.png"
+            alt="Cookies flow chart showing consent banner, browser, server and attributes"
+            loading="lazy"
+          />
+          <figcaption class="slide-caption">
+            <h3>Cookies</h3>
+            <p><strong>Origin:</strong> Netscape (Lou Montulli), mid-1990s</p>
+            <p><strong>What it does:</strong> Adds state to the stateless web—sessions, preferences, analytics—governed by attributes and consent.</p>
+          </figcaption>
+        </figure>
+
+        <!-- Controls -->
+        <button class="slide-btn prev" aria-label="Previous slide" title="Previous (←)">❮</button>
+        <button class="slide-btn next" aria-label="Next slide" title="Next (→)">❯</button>
+
+        <!-- Dots -->
+        <div class="dots" role="tablist" aria-label="Slide selector">
+          <button class="dot is-active" role="tab" aria-controls="slide-0" aria-label="HTTP"></button>
+          <button class="dot" role="tab" aria-controls="slide-1" aria-label="SEOs"></button>
+          <button class="dot" role="tab" aria-controls="slide-2" aria-label="Cookies"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Table Of Content -->
+    <section class="panel">
+      <h2>Table of Contents</h2>
+      <div class="toc-grid">
+        <a class="card" href="concepts.html">
+          <h3>Key Concepts</h3>
+          <p class="lead">7 core ideas: statelessness, headers, HTTPS, versions…</p>
+        </a>
+        <a class="card" href="http-methods.html">
+          <h3>HTTP Methods</h3>
+          <p class="lead">GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS…</p>
+        </a>
+        <a class="card" href="status-codes.html">
+          <h3>Status Codes</h3>
+          <p class="lead">What the 1xx–5xx classes mean and when they appear.</p>
+        </a>
+        <a class="card" href="seos.html">
+          <h3>Search Engine Optimizers</h3>
+          <p class="lead">Discoverability, crawling, indexing, meta robots, canonical, sitemaps.</p>
+        </a>
+        <a class="card" href="cookies.html">
+          <h3>Cookies</h3>
+          <p class="lead">Strictly necessary vs performance vs functional vs analytics; consent.</p>
+        </a>
+        <a class="card" href="quiz-section.html">
+          <h3>Quiz</h3>
+          <p class="lead">Randomized questions across HTTP, SEOs, and Cookies.</p>
+        </a>
+        <a class="card" href="references.html">
+          <h3>References &amp; Resources</h3>
+          <p class="lead">RFCs, MDN docs, security guides, and other resources.</p>
+        </a>
+        <a class="card" href="about.html">
+          <h3>About</h3>
+          <p class="lead">Some information about the man behind the scene.</p>
+        </a>
+      </div>
+    </section>
   </main>
-<!--The Footer is where we can find our class website, and it will be present on each pages-->
+
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="container">
-      <p>This site is a class project for IT 3203. Our course website is:
+      <p>
+        This site is a class project for IT 3203. Our course website is:
         <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.
       </p>
       <p>© Made in 2025 by Benel Kawata</p>
     </div>
   </footer>
 
-  <!--This is the theme initializer -->
+  <!-- Theme -->
   <script defer src="./assets/theme.js"></script>
+
+  <!-- Slideshow JS (small, page-local) -->
+  <script>
+    (function () {
+      const slider = document.querySelector('.slider');
+      if (!slider) return;
+
+      const slides = [...slider.querySelectorAll('.slide')];
+      const dots   = [...slider.querySelectorAll('.dot')];
+      const prev   = slider.querySelector('.prev');
+      const next   = slider.querySelector('.next');
+
+      let i = 0;
+      const clamp = n => (n + slides.length) % slides.length;
+
+      function show(n, focusDot = false) {
+        i = clamp(n);
+        slides.forEach((s, idx) => s.classList.toggle('is-active', idx === i));
+        dots.forEach((d, idx) => {
+          d.classList.toggle('is-active', idx === i);
+          if (focusDot && idx === i) d.focus();
+        });
+      }
+
+      prev.addEventListener('click', () => show(i - 1));
+      next.addEventListener('click', () => show(i + 1));
+
+      dots.forEach((d, idx) => d.addEventListener('click', () => show(idx, true)));
+
+      // Keyboard support (arrow keys)
+      slider.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); show(i - 1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); show(i + 1); }
+      });
+
+      // Resize guard for images
+      window.addEventListener('load', () => show(0));
+    })();
+  </script>
 </body>
 </html>

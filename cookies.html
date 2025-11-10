@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <title>Cookies — Fundamentals of HTTP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <header class="navbar site-nav" role="banner">
+    <div class="wrap navbar-inner">
+      <a href="index.html" class="brand">Fundamentalsof HTTP</a>
+      <nav id="main-nav" aria-label="Main" class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="concepts.html">Key Concepts</a>
+        <a href="http-methods.html">HTTP Methods</a>
+        <a href="status-codes.html">Status Codes</a>
+        <a href="seos.html">SEOs</a>
+        <a href="cookies.html">Cookies</a>
+        <a href="quiz-section.html">Quiz</a>
+        <a href="references.html">References</a>
+        <a href="about.html">About</a>
+      </nav>
+      <button class="badge" aria-label="Toggle light/dark theme" onclick="toggleTheme()">🌙 / ☀️ Theme</button>
+    </div>
+  </header>
+  <header class="page">
+    <h1>Cookies in Websites</h1>
+  </header>
+  <main class="container prose">
+    <p>HTTP cookies are small name–value pairs (a fundamental data representation in computer systems and) stored by the browser. They allow users to enable sessions, preferences, analytics, and more. The table below contrasts common categories.</p>
+
+    <div class="table-wrap" role="region" aria-label="Cookies board">
+      <table class="table">
+        <thead>
+          <tr>
+            <th><strong>Category</strong></th>
+            <th><strong>Purpose</strong></th>
+            <th><strong>Examples</strong></th>
+            <th><strong>Consent?</strong></th>
+            <th><strong>Typical Duration</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Strictly Necessary</strong></td>
+            <td>Core site functionality (auth sessions, CSRF, load balancing).</td>
+            <td><code>sessionid</code>, <code>csrftoken</code>, routing/sticky cookies.</td>
+            <td>Generally not consent-gated (still disclose).</td>
+            <td>Session or short-term.</td>
+          </tr>
+          <tr>
+            <td><strong>Performance</strong></td>
+            <td>Improves speed and reliability (CDN metrics, error tracking).</td>
+            <td>RUM beacons, crash IDs.</td>
+            <td>Often consent-gated depending on jurisdiction.</td>
+            <td>Short to medium.</td>
+          </tr>
+          <tr>
+            <td><strong>Functional</strong></td>
+            <td>Remember choices (language, theme, accessibility).</td>
+            <td><code>theme=dark</code>, locale, UI prefs.</td>
+            <td>Usually requires consent or user action.</td>
+            <td>Medium to long.</td>
+          </tr>
+          <tr>
+            <td><strong>Analytics</strong></td>
+            <td>Aggregated usage measurement and engagement.</td>
+            <td>GA/PLA IDs, first-party analytics IDs.</td>
+            <td>Consent required in many regions (e.g., EU).</td>
+            <td>Medium to long.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><strong>Summary.</strong> It is better to keep strictly necessary cookies minimal and mostly documented. Also, it is important to gate non-essential cookies (performance, functional, analytics,...) behind consent when required, offer easy revocation, and prefer first-party, short-lived identifiers with clear retention policies.</p>
+  </main>
+
+  <!-- Footer + Theme -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>This site is a class project for IT 3203. Our course website is:
+        <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.
+      </p>
+      <p>© Made in 2025 by Benel Kawata</p>
+    </div>
+  </footer>
+  <script defer src="assets/theme.js"></script>
+</body>
+</html>

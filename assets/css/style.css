@@ -193,4 +193,104 @@ html, body, .panel, .card, .navbar, .site-footer, table, th, td, blockquote {
   border: 1px solid var(--border);
 }
 
+/* ===== Tables: responsive + readable ===== */
+.table-wrap { overflow-x:auto; border:1px solid var(--border); border-radius:12px; background:var(--panel); }
+.table { width:100%; border-collapse: collapse; }
+.table caption { text-align:left; padding:12px 16px; color:var(--muted); font-size:.95rem; }
+.table th, .table td { padding:12px 14px; border-top:1px solid var(--border); text-align:left; vertical-align:top; }
+.table th { font-weight:600; color:var(--ink); background:color-mix(in oklab, var(--panel), var(--bg) 20%); }
+.table tr:first-child th, .table tr:first-child td { border-top:none; }
 
+/* ===== Light theme tweaks for contrast ===== */
+html[data-theme="light"] :where(.site-nav, .page, .table-wrap) {
+  background: #ffffff;
+}
+html[data-theme="light"] .table th { background:#f6f7fb; }
+
+/* ===========================
+   Overview Slideshow Styles
+   =========================== */
+
+.slideshow { margin-top: 20px; }
+.slideshow-head { margin-bottom: .75rem; }
+
+.slider {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: color-mix(in oklab, var(--panel), var(--bg) 10%);
+  overflow: hidden;
+}
+
+.slide {
+  display: none;
+  padding: clamp(12px, 2vw, 20px);
+  gap: clamp(14px, 2.5vw, 20px);
+  align-items: center;
+  grid-template-columns: 1fr 1.1fr;
+}
+.slide.is-active { display: grid; }
+
+.slide img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #0c0f18;
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+}
+
+.slide-caption h3 { margin: 0 0 .3rem; }
+.slide-caption p  { margin: .25rem 0; color: var(--muted); }
+
+@media (max-width: 900px){
+  .slide { grid-template-columns: 1fr; }
+}
+
+/* Controls */
+.slide-btn {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--panel), var(--bg) 15%);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0,0,0,.25);
+}
+.slide-btn:hover { background: color-mix(in oklab, var(--panel), var(--bg) 25%); }
+.slide-btn.prev { left: 10px; }
+.slide-btn.next { right: 10px; }
+
+/* Dots */
+.dots {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  translate: -50% 0;
+  display: flex;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--panel), var(--bg) 20%);
+  border: 1px solid var(--border);
+}
+.dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: color-mix(in oklab, var(--panel), var(--bg) 45%);
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+.dot.is-active { background: var(--brand); border-color: var(--brand); }
+
+/* Light theme adjustments for images */
+:root[data-theme="light"] .slide img {
+  background: #fff;
+  border-color: #e5e7eb;
+}

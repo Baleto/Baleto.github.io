@@ -1,97 +1,30 @@
-//assets/theme.js
-const KEY = "theme";//localStorage key
-const THEMES = new Set(["light", "dark"]);
-const root = document.documentElement;
+//It works on every page and exposes window.toggleTheme
 
-//helpers
-
-function systemPrefersDark() {
-  return matchMedia && matchMedia("(prefers-color-scheme: dark)").matches;
-}
-
-function valid(theme) {
-  return THEMES.has(theme);
-}
-
-function setColorScheme(theme) {
-//Helps native form controls match the theme
-  root.style.colorScheme = theme === "dark" ? "dark" : "light";
-}
-
-function syncMetaThemeColor() {
-//Keep browser UI (mobile address bar) in sync with current bg
-  const meta = document.querySelector('meta[name="theme-color"]');
-  if (!meta) return;
-  const bg = getComputedStyle(document.body || root).backgroundColor;
-  meta.setAttribute("content", bg);
-}
-
-function apply(theme, { persist = true } = {}) {
-  if (!valid(theme)) return;
-  root.setAttribute("data-theme", theme);
-  setColorScheme(theme);
-  if (persist) {
-    try { localStorage.setItem(KEY, theme); } catch {}
+(function () {
+  const KEY = "site.theme";
+  const root = document.documentElement;
+  
+//This reads saved or current attribute, default to 'dark'
+  function getTheme() {
+    try {
+      return localStorage.getItem(KEY) || root.getAttribute("data-theme") || "dark";
+    } catch {
+      return root.getAttribute("data-theme") || "dark";
+    }
   }
-//Notify any listeners (e.g., components that need to restyle)
-  root.dispatchEvent(new CustomEvent("themechange", { detail: { theme } }));
-//Try to align browser UI color
-  if (document.readyState !== "loading") syncMetaThemeColor();
-}
 
-function storedTheme() {
-  try { return localStorage.getItem(KEY) || null; } catch { return null; }
-}
+  function applyTheme(t) {
+    root.setAttribute("data-theme", t);
+    try { localStorage.setItem(KEY, t); } catch { /* ignore */ }
+  }
 
-//public actions
+//A global function for inline onclick handlers
+  window.toggleTheme = function toggleTheme() {
+    const next = getTheme() === "dark" ? "light" : "dark";
+    applyTheme(next);
+  };
 
-function initTheme() {
-  const saved = storedTheme();
-  const theme = valid(saved) ? saved : (systemPrefersDark() ? "dark" : "light");
-  apply(theme, { persist: !!saved });//persist only if the user had an explicit choice
-}
-
-function toggleTheme() {
-  const current = root.getAttribute("data-theme") || (systemPrefersDark() ? "dark" : "light");
-  apply(current === "dark" ? "light" : "dark");
-}
-
-function setTheme(theme) {
-//programmatic setter (e.g., future UI with three options)
-  if (valid(theme)) apply(theme);
-}
-
-function getTheme() {
-  return root.getAttribute("data-theme");
-}
-
-//boot & listeners
-
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", () => {
-    initTheme();
-    syncMetaThemeColor();
-  });
-} else {
-  initTheme();
-  syncMetaThemeColor();
-}
-
-//If the user has NOT chosen a theme (no saved value), follow OS changes.
-try {
-  const mq = matchMedia("(prefers-color-scheme: dark)");
-  mq.addEventListener?.("change", () => {
-    if (!storedTheme()) apply(mq.matches ? "dark" : "light", { persist: false });
-  });
-} catch {}
-
-//Keep tabs in sync (if theme changed in another tab)
-window.addEventListener("storage", (e) => {
-  if (e.key === KEY && valid(e.newValue)) apply(e.newValue, { persist: false });
-});
-
-//Expose globals for HTML onclick handlers and future use
-window.toggleTheme = toggleTheme;
-window.initTheme = initTheme;
-window.setTheme = setTheme;
-window.getTheme = getTheme;
+//On first load, saved theme is applied (if there are any)
+  const saved = getTheme();
+  if (saved) applyTheme(saved);
+})();
