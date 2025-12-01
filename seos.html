@@ -8,28 +8,47 @@
 </head>
 <body>
   <!-- Header -->
-  <header class="navbar site-nav" role="banner">
-    <div class="wrap navbar-inner">
-      <a href="index.html" class="brand">Fundamentals of HTTP</a>
-      <nav id="main-nav" aria-label="Main" class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="concepts.html">Key Concepts</a>
-        <a href="http-methods.html">HTTP Methods</a>
-        <a href="status-codes.html">Status Codes</a>
-        <a href="seos.html" aria-current="page">SEOs</a>
-        <a href="cookies.html">Cookies</a>
-        <a href="quiz-section.html">Quiz</a>
-        <a href="references.html">References</a>
-        <a href="about.html">About</a>
-      </nav>
-      <button class="badge" aria-label="Toggle light/dark theme" onclick="toggleTheme()">🌙 / ☀️ Theme</button>
-    </div>
-  </header>
+ <header class="navbar site-nav" role="banner">
+  <div class="wrap navbar-inner">
+    <a href="index.html" class="brand">Fundamentals of HTTP</a>
 
+    <!-- Right-side controls (theme + hamburger) -->
+    <div class="navbar-controls">
+      <button class="badge theme-toggle"
+              aria-label="Toggle light/dark theme"
+              onclick="toggleTheme()">
+        🌙 / ☀️ Theme
+      </button>
+
+      <!-- Hamburger button (shown on small screens) -->
+      <button class="nav-toggle"
+              id="nav-toggle"
+              aria-label="Toggle navigation menu"
+              aria-expanded="false"
+              aria-controls="main-nav">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </div>
+
+    <!-- Main navigation -->
+    <nav id="main-nav" aria-label="Main" class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="concepts.html">Key Concepts</a>
+      <a href="http-methods.html">HTTP Methods</a>
+      <a href="status-codes.html">Status Codes</a>
+      <a href="seos.html">SEOs</a>
+      <a href="cookies.html">Cookies</a>
+      <a href="quiz-section.html">Quiz</a>
+      <a href="references.html">References</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
   <header class="page">
     <h1>SEOs — Search Engine Optimization</h1>
   </header>
-
   <main class="container prose">
     <p>Search Engine Optimization (SEO) ensures that pages can be discovered, crawled, and indexed correctly. Also that their content matches the searcher's intent. Below is a quick operator board showing how major search engines handle crawl/index directives.</p>
 
@@ -95,5 +114,17 @@
     </div>
   </footer>
   <script defer src="assets/theme.js"></script>
+    <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggle = document.getElementById('nav-toggle');
+    const nav = document.getElementById('main-nav');
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  });
+</script>
 </body>
 </html>

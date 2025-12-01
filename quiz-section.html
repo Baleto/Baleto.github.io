@@ -34,37 +34,53 @@
   </style>
 </head>
 <body>
-  <header class="navbar">
-    <div class="navbar-inner">
-      <a href="index.html" class="brand">Fundamentals of HTTP</a>
-      <nav id="main-nav" aria-label="Main">
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="concepts.html">Key Concepts</a></li>
-          <li><a href="http-methods.html">HTTP Methods</a></li>
-          <li><a href="status-codes.html">Status Codes</a></li>
-          <li><a href="seo.html">SEOs</a></li>
-          <li><a href="cookies.html">Cookies</a></li>
-          <li><a href="quiz-section.html" aria-current="page">Quiz</a></li>
-          <li><a href="references.html">References</a></li>
-          <li><a href="about.html">About</a></li>
-        </ul>
-      </nav>
-      <button class="badge" aria-label="Toggle light/dark theme" onclick="toggleTheme()">🌙 / ☀️ Theme</button>
-    </div>
-  </header>
+ <header class="navbar site-nav" role="banner">
+  <div class="wrap navbar-inner">
+    <a href="index.html" class="brand">Fundamentals of HTTP</a>
 
+    <!-- Right-side controls (theme + hamburger) -->
+    <div class="navbar-controls">
+      <button class="badge theme-toggle"
+              aria-label="Toggle light/dark theme"
+              onclick="toggleTheme()">
+        🌙 / ☀️ Theme
+      </button>
+
+      <!-- Hamburger button (shown on small screens) -->
+      <button class="nav-toggle"
+              id="nav-toggle"
+              aria-label="Toggle navigation menu"
+              aria-expanded="false"
+              aria-controls="main-nav">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </div>
+
+    <!-- Main navigation -->
+    <nav id="main-nav" aria-label="Main" class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="concepts.html">Key Concepts</a>
+      <a href="http-methods.html">HTTP Methods</a>
+      <a href="status-codes.html">Status Codes</a>
+      <a href="seos.html">SEOs</a>
+      <a href="cookies.html">Cookies</a>
+      <a href="quiz-section.html">Quiz</a>
+      <a href="references.html">References</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
   <main class="container">
     <h1>Interactive Quiz Section</h1>
     <p class="lead">HTTP (15 questions) • SEOs (15 questions) • Cookies (15 questions) — or the full knowledge check (25 questions).</p>
-
     <div class="quiz-controls">
       <button class="btn" onclick="startQuiz('checkpoint')">Knowledge check - Quiz</button>
       <button class="btn" onclick="startQuiz('http')">Fundamentals of HTTP - Quiz</button>
       <button class="btn" onclick="startQuiz('seo')">SEOs Fundamentals - Quiz</button>
       <button class="btn" onclick="startQuiz('cookies')">Cookies Fundamentals - Quiz</button>
     </div>
-
     <form id="quizForm" class="hidden">
       <div id="quizContainer"></div>
       <button type="button" class="btn" onclick="submitQuiz()">Submit Answers</button>
@@ -72,21 +88,18 @@
       <div class="legend hidden" id="legend">Legend: <span style="color:#0f0;">Green = Correct</span>, <span style="color:#f00;">Red = Wrong</span></div>
     </form>
   </main>
-
   <div id="overlay" class="overlay hidden"></div>
   <div id="resultModal" class="result-modal hidden" role="dialog" aria-modal="true">
     <h2 id="resultTitle"></h2>
     <p id="resultMsg"></p>
     <button class="btn" onclick="closeModal()">Close</button>
   </div>
-
   <footer class="site-footer">
     <div class="container">
       <p>This site is a class project for IT 3203. Course website: <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.</p>
       <p>© Made in 2025 by Benel Kawata</p>
     </div>
   </footer>
-
   <script defer src="assets/theme.js"></script>
   <script>
     const questions = {
@@ -205,5 +218,17 @@
       currentQuiz=[];
     }
   </script>
+    <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggle = document.getElementById('nav-toggle');
+    const nav = document.getElementById('main-nav');
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  });
+</script>
 </body>
 </html>

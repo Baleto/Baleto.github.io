@@ -9,26 +9,45 @@
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
-
   <!-- Header -->
-  <header class="navbar site-nav" role="banner">
-    <div class="wrap navbar-inner">
-      <a href="index.html" class="brand">Fundamentals of HTTP</a>
-      <nav id="main-nav" aria-label="Main" class="nav-links">
-        <a href="index.html" aria-current="page">Home</a>
-        <a href="concepts.html">Key Concepts</a>
-        <a href="http-methods.html">HTTP Methods</a>
-        <a href="status-codes.html">Status Codes</a>
-        <a href="seos.html">SEOs</a>
-        <a href="cookies.html">Cookies</a>
-        <a href="quiz-section.html">Quiz</a>
-        <a href="references.html">References</a>
-        <a href="about.html">About</a>
-      </nav>
-      <button class="badge" aria-label="Toggle light/dark theme" onclick="toggleTheme()">🌙 / ☀️ Theme</button>
-    </div>
-  </header>
+ <header class="navbar site-nav" role="banner">
+  <div class="wrap navbar-inner">
+    <a href="index.html" class="brand">Fundamentals of HTTP</a>
 
+    <!-- Right-side controls (theme + hamburger) -->
+    <div class="navbar-controls">
+      <button class="badge theme-toggle"
+              aria-label="Toggle light/dark theme"
+              onclick="toggleTheme()">
+        🌙 / ☀️ Theme
+      </button>
+
+      <!-- Hamburger button (shown on small screens) -->
+      <button class="nav-toggle"
+              id="nav-toggle"
+              aria-label="Toggle navigation menu"
+              aria-expanded="false"
+              aria-controls="main-nav">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+    </div>
+
+    <!-- Main navigation -->
+    <nav id="main-nav" aria-label="Main" class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="concepts.html">Key Concepts</a>
+      <a href="http-methods.html">HTTP Methods</a>
+      <a href="status-codes.html">Status Codes</a>
+      <a href="seos.html">SEOs</a>
+      <a href="cookies.html">Cookies</a>
+      <a href="quiz-section.html">Quiz</a>
+      <a href="references.html">References</a>
+      <a href="about.html">About</a>
+    </nav>
+  </div>
+</header>
   <main id="main" class="container">
     <!-- Hero -->
     <section class="hero">
@@ -51,12 +70,10 @@
         class="hero-img"
       />
     </section>
-
     <!--Overview slideshow (HTTP • SEOs • Cookies)-->
     <section class="panel slideshow" aria-labelledby="slideshow-heading">
       <div class="slideshow-head">
         <h2 id="slideshow-heading">At-a-glance Overviews</h2>
-        <p class="lead">Swipe/arrow through quick primers that compliment (not duplicate) the full sections.</p>
       </div>
 
       <div class="slider" role="region" aria-label="HTTP, SEOs and Cookies overview">
@@ -73,7 +90,6 @@
             <p><strong>What it does:</strong> Defines the request–response semantics for the Web (methods, status codes, headers) so browsers and servers can talk.</p>
           </figcaption>
         </figure>
-
         <figure class="slide" data-title="SEOs" data-index="1">
           <img
             src="assets/img/SEO_diagram.png"
@@ -99,11 +115,9 @@
             <p><strong>What it does:</strong> Adds state to the stateless web—sessions, preferences, analytics—governed by attributes and consent.</p>
           </figcaption>
         </figure>
-
         <!-- Controls -->
         <button class="slide-btn prev" aria-label="Previous slide" title="Previous (←)">❮</button>
         <button class="slide-btn next" aria-label="Next slide" title="Next (→)">❯</button>
-
         <!-- Dots -->
         <div class="dots" role="tablist" aria-label="Slide selector">
           <button class="dot is-active" role="tab" aria-controls="slide-0" aria-label="HTTP"></button>
@@ -112,7 +126,6 @@
         </div>
       </div>
     </section>
-
     <!-- Table Of Content -->
     <section class="panel">
       <h2>Table of Contents</h2>
@@ -152,7 +165,6 @@
       </div>
     </section>
   </main>
-
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container">
@@ -163,24 +175,19 @@
       <p>© Made in 2025 by Benel Kawata</p>
     </div>
   </footer>
-
   <!-- Theme -->
   <script defer src="./assets/theme.js"></script>
-
   <!-- Slideshow JS (small, page-local) -->
   <script>
     (function () {
       const slider = document.querySelector('.slider');
       if (!slider) return;
-
       const slides = [...slider.querySelectorAll('.slide')];
       const dots   = [...slider.querySelectorAll('.dot')];
       const prev   = slider.querySelector('.prev');
       const next   = slider.querySelector('.next');
-
       let i = 0;
       const clamp = n => (n + slides.length) % slides.length;
-
       function show(n, focusDot = false) {
         i = clamp(n);
         slides.forEach((s, idx) => s.classList.toggle('is-active', idx === i));
@@ -189,21 +196,28 @@
           if (focusDot && idx === i) d.focus();
         });
       }
-
       prev.addEventListener('click', () => show(i - 1));
       next.addEventListener('click', () => show(i + 1));
-
       dots.forEach((d, idx) => d.addEventListener('click', () => show(idx, true)));
-
       // Keyboard support (arrow keys)
       slider.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft')  { e.preventDefault(); show(i - 1); }
         if (e.key === 'ArrowRight') { e.preventDefault(); show(i + 1); }
       });
-
       // Resize guard for images
       window.addEventListener('load', () => show(0));
     })();
   </script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggle = document.getElementById('nav-toggle');
+    const nav = document.getElementById('main-nav');
+    if (!toggle || !nav) return;
+    toggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  });
+</script>
 </body>
 </html>
