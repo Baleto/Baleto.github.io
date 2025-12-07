@@ -121,6 +121,7 @@ a:hover, a:focus-visible { text-decoration: underline; }
   background: color-mix(in oklab, var(--panel) 70%, var(--bg) 30%);
   color: var(--ink);
   font-weight: 600;
+  font-size: 0.98rem;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -158,9 +159,10 @@ a:hover, a:focus-visible { text-decoration: underline; }
 }
 .nav-dropdown-menu a {
   display: block;
-  padding: 0.5rem 0.9rem;
+  padding: 0.6rem 0.95rem;
   color: var(--ink);
-  font-size: 0.95rem;
+  font-size: 0.96rem;
+  line-height: 1.4;
   white-space: nowrap;
 }
 .nav-dropdown-menu a:hover,
@@ -173,13 +175,19 @@ a:hover, a:focus-visible { text-decoration: underline; }
   display: block;
 }
 
-/* Make dropdown stretch on small screens */
-@media (max-width: 600px) {
+/* Mobile-specific dropdown behaviour */
+@media (max-width: 720px) {
   .nav-dropdown-menu {
     left: 0;
     right: 0;
+    margin-inline: 8px;
+    max-height: calc(100vh - 4.5rem);
+    overflow-y: auto;
+    border-radius: 16px;
   }
 }
+
+/* Old 600px block no longer needed (merged into 720px above) */
 
 .navbar-controls {
   display: flex;
@@ -378,7 +386,6 @@ input:focus, textarea:focus { outline: 2px solid var(--brand); outline-offset: 2
   --kbd-bg:  #f3f4f6;        /* light kbd */
   --kbd-ink: #0f172a;
 }
-
 /* Helper tokens for both themes (dark defaults) */
 :root{
   --table-head: #133a88;   /* was hardcoded in th */
@@ -641,7 +648,6 @@ html[data-theme="light"] .table th { background:#f6f7fb; }
   background: rgba(248, 113, 113, 0.14);
   box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.7);
 }
-
 /* Actions row under quiz */
 .quiz-actions {
   display: flex;
@@ -722,13 +728,13 @@ html[data-theme="light"] .table th { background:#f6f7fb; }
     opacity: 1;
     pointer-events: auto;
   }
-  /* Keep main content from feeling cramped */
+  /* Keeps main content from feeling cramped */
   .container {
     padding-inline: 16px;
   }
-  /* Tables: let them stretch edge-to-edge and scroll horizontally */
+  /* Tables: stretch edge-to-edge and scroll horizontally */
   .table-wrap {
-    margin-inline: -16px;   /* reach the screen edges */
+    margin-inline: -16px;   /* reaches the screen edges */
     border-radius: 0;
   }
 }
