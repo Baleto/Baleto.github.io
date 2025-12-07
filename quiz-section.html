@@ -93,18 +93,14 @@
   </div>
 </footer>
 <script defer src="./assets/theme.js"></script>
-
 <script>
-/* ===== Dropdown nav behaviour (shared across pages) ===== */
+/*Dropdown nav behaviour (shared across pages) */
 document.addEventListener('click', (event) => {
   const dropdown = document.querySelector('.nav-dropdown');
   if (!dropdown) return;
-
   const toggle = dropdown.querySelector('.nav-dropdown-toggle');
   const menu   = dropdown.querySelector('.nav-dropdown-menu');
-
   const clickedToggle = toggle.contains(event.target);
-
   if (clickedToggle) {
     const isOpen = dropdown.classList.toggle('open');
     toggle.setAttribute('aria-expanded', String(isOpen));
@@ -113,13 +109,11 @@ document.addEventListener('click', (event) => {
     toggle.setAttribute('aria-expanded', 'false');
   }
 });
-
-/* ===== Quiz data helper ===== */
+/*Quiz data helper*/
 function q(text, options, answerIndex) {
   return { text, options, answerIndex };
 }
-
-/* ===== 15 HTTP questions ===== */
+/*15 HTTP questions*/
 const HTTP_QUESTIONS = [
   q("What does HTTP stand for?", [
     "Hypertext Transfer Protocol",
@@ -212,8 +206,7 @@ const HTTP_QUESTIONS = [
     "Redirection"
   ], 3)
 ];
-
-/* ===== 15 SEO questions ===== */
+/*15 SEO questions*/
 const SEO_QUESTIONS = [
   q("What does SEO stand for?", [
     "Search Engine Operation",
@@ -306,8 +299,7 @@ const SEO_QUESTIONS = [
     "They disable JavaScript"
   ], 1)
 ];
-
-/* ===== 15 Cookies questions ===== */
+/*15 Cookies questions*/
 const COOKIE_QUESTIONS = [
   q("In HTTP, what is a cookie primarily used for?", [
     "Styling the page layout",
@@ -400,8 +392,7 @@ const COOKIE_QUESTIONS = [
     "Strictly necessary cookies"
   ], 1)
 ];
-
-/* ===== 15 Security & HTTPS questions ===== */
+/*15 Security & HTTPS questions*/
 const HTTPS_QUESTIONS = [
   q("What does HTTPS stand for?", [
     "Hyper Transfer Text Protocol Secure",
@@ -494,8 +485,7 @@ const HTTPS_QUESTIONS = [
     "HTTPS removes the concept of headers"
   ], 1)
 ];
-
-/* ===== Quiz logic ===== */
+/*Quiz logic */
 const quizPanel    = document.getElementById('quiz-panel');
 const quizForm     = document.getElementById('quiz-form');
 const quizTitle    = document.getElementById('quiz-title');
@@ -504,14 +494,11 @@ const submitBtn    = document.getElementById('submit-quiz');
 const retryBtn     = document.getElementById('retry-quiz');
 const actionsRow   = document.querySelector('.quiz-actions');
 const modeButtons  = document.querySelectorAll('.quiz-mode-btn');
-
 let currentQuestions = [];
 let answered = false;
-
 function shuffle(arr) {
   return [...arr].sort(() => Math.random() - 0.5);
 }
-
 function buildPool(mode) {
   if (mode === 'http') {
     return shuffle(HTTP_QUESTIONS).slice(0, 15);
@@ -534,7 +521,6 @@ function buildPool(mode) {
   ];
   return shuffle(all).slice(0, 30);
 }
-
 function modeLabel(mode) {
   switch (mode) {
     case 'http':       return 'Fundamentals of HTTP – Quiz';
@@ -545,7 +531,6 @@ function modeLabel(mode) {
     default:           return 'Quiz';
   }
 }
-
 function modeSubtitle(mode, count) {
   if (mode === 'checkpoint') {
     return `Mixed knowledge check across HTTP, SEOs, Cookies, and Security & HTTPS. ${count} questions.`;
@@ -564,15 +549,12 @@ function modeSubtitle(mode, count) {
   }
   return '';
 }
-
 function renderQuiz(mode) {
   answered = false;
   currentQuestions = buildPool(mode);
-
   quizTitle.textContent = modeLabel(mode);
   quizSubtitle.textContent = modeSubtitle(mode, currentQuestions.length);
   quizForm.innerHTML = '';
-
   currentQuestions.forEach((qObj, index) => {
     const qId = `q${index}`;
     const fieldset = document.createElement('fieldset');
@@ -591,13 +573,11 @@ function renderQuiz(mode) {
     `;
     quizForm.appendChild(fieldset);
   });
-
   quizPanel.style.display = 'block';
   actionsRow.style.display = 'flex';
   submitBtn.style.display = 'inline-block';
   retryBtn.style.display = 'none';
 }
-
 modeButtons.forEach(btn => {
   btn.addEventListener('click', () => {
     const mode = btn.dataset.mode;
@@ -605,27 +585,21 @@ modeButtons.forEach(btn => {
     window.scrollTo({ top: quizPanel.offsetTop - 80, behavior: 'smooth' });
   });
 });
-
 function evaluateQuiz() {
   if (answered) return;
-
   let correctCount = 0;
   const selectedAnswers = [];
-
   currentQuestions.forEach((qObj, index) => {
     const qName = `q${index}`;
     const selected = quizForm.querySelector(`input[name="${qName}"]:checked`);
     const selectedIndex = selected ? Number(selected.value) : null;
     selectedAnswers.push(selectedIndex);
-
     if (selectedIndex === qObj.answerIndex) {
       correctCount++;
     }
   });
-
   const total = currentQuestions.length;
   const scorePercent = Math.round((correctCount / total) * 100);
-
   let message;
   if (scorePercent >= 90) {
     message = "🎉 Congratulations! You scored " + scorePercent + "%. Excellent work!";
@@ -634,18 +608,15 @@ function evaluateQuiz() {
   } else {
     message = "📚 You scored " + scorePercent + "%. You should study more and try again.";
   }
-
   // Highlight right/wrong answers
   currentQuestions.forEach((qObj, index) => {
     const fieldset = quizForm.querySelectorAll('.quiz-question')[index];
     fieldset.classList.remove('quiz-correct', 'quiz-wrong');
-
     const correctIdx = qObj.answerIndex;
     const correctInput = fieldset.querySelector(`input[value="${correctIdx}"]`);
     if (correctInput) {
       correctInput.parentElement.classList.add('quiz-option-correct');
     }
-
     const selectedIndex = selectedAnswers[index];
     if (selectedIndex != null && selectedIndex !== correctIdx) {
       const wrongInput = fieldset.querySelector(`input[value="${selectedIndex}"]`);
@@ -654,23 +625,19 @@ function evaluateQuiz() {
       }
     }
   });
-
   showResultPopup(message);
-
   answered = true;
   submitBtn.style.display = 'none';
   retryBtn.style.display = 'inline-block';
 }
-
 submitBtn.addEventListener('click', evaluateQuiz);
-
 retryBtn.addEventListener('click', () => {
   quizForm.innerHTML = '';
   quizPanel.style.display = 'none';
   actionsRow.style.display = 'none';
 });
 
-/* ===== Simple result popup ===== */
+/*Simple result popup*/
 function showResultPopup(message) {
   let overlay = document.getElementById('quiz-overlay');
   if (!overlay) {
@@ -683,7 +650,6 @@ function showResultPopup(message) {
     overlay.style.alignItems = 'center';
     overlay.style.justifyContent = 'center';
     overlay.style.zIndex = '50';
-
     const dialog = document.createElement('div');
     dialog.id = 'quiz-dialog';
     dialog.style.maxWidth = '420px';
@@ -693,7 +659,6 @@ function showResultPopup(message) {
     dialog.style.background = 'var(--panel)';
     dialog.style.padding = '1.4rem 1.6rem';
     dialog.style.boxShadow = '0 22px 40px rgba(0,0,0,0.75)';
-
     dialog.innerHTML = `
       <h2 style="margin-top:0;">Quiz result</h2>
       <p id="quiz-result-message" class="lead"></p>
@@ -704,7 +669,6 @@ function showResultPopup(message) {
         After closing, you can review which options were correct or wrong.
       </p>
     `;
-
     overlay.appendChild(dialog);
     document.body.appendChild(overlay);
 
@@ -714,10 +678,10 @@ function showResultPopup(message) {
   } else {
     overlay.style.display = 'flex';
   }
-
   const msgEl = document.getElementById('quiz-result-message');
   msgEl.textContent = message;
 }
 </script>
 </body>
+  <button class="to-top" aria-label="Back to top">↑</button>
 </html>
