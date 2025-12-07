@@ -27,15 +27,15 @@
         </button>
         <div class="nav-dropdown-menu" role="menu">
           <a href="index.html" role="menuitem">Home</a>
-          <a href="concepts.html" role="menuitem">Key Concepts</a>
-          <a href="http-methods.html" role="menuitem">HTTP Methods</a>
-          <a href="status-codes.html" role="menuitem">Status Codes</a>
-          <a href="seos.html" role="menuitem">SEOs</a>
-          <a href="cookies.html" role="menuitem">Cookies</a>
-          <a href="https-security.html" role="menuitem">Security &amp; HTTPS</a>
-          <a href="quiz-section.html" role="menuitem">Quiz</a>
-          <a href="references.html" role="menuitem">References</a>
-          <a href="about.html" role="menuitem">About</a>
+            <a href="concepts.html" role="menuitem">Concepts</a>
+            <a href="http-methods.html" role="menuitem">Methods</a>
+            <a href="status-codes.html" role="menuitem">Codes</a>
+            <a href="seos.html" role="menuitem">SEOs</a>
+            <a href="cookies.html" role="menuitem">Cookies</a>
+            <a href="https-security.html" role="menuitem">HTTPS</a>
+            <a href="quiz-section.html" role="menuitem">Quiz</a>
+            <a href="references.html" role="menuitem">References</a>
+            <a href="about.html" role="menuitem">About</a>
         </div>
       </div>
     </div>
@@ -77,10 +77,14 @@
     <div class="quiz-actions" style="margin-top: 1rem; display:none;">
       <button type="button" id="submit-quiz" class="quiz-mode-btn" style="max-width: 220px;">
         Submit answers
-      </button>
-      <button type="button" id="retry-quiz" class="badge" style="margin-left: 0.75rem; display:none;">
-        Try again
-      </button>
+      <button
+  type="button"
+  id="retry-quiz"
+  class="quiz-mode-btn quiz-small"
+  style="margin-left: 0.75rem; display:none;"
+>
+  Try again
+</button>
     </div>
   </section>
 </main>
@@ -636,7 +640,6 @@ retryBtn.addEventListener('click', () => {
   quizPanel.style.display = 'none';
   actionsRow.style.display = 'none';
 });
-
 /*Simple result popup*/
 function showResultPopup(message) {
   let overlay = document.getElementById('quiz-overlay');
