@@ -7,50 +7,54 @@
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
   <!-- Header -->
- <header class="navbar site-nav" role="banner">
-  <div class="wrap navbar-inner">
-    <a href="index.html" class="brand">Fundamentals of HTTP</a>
+  <header class="navbar site-nav" role="banner">
+    <div class="wrap navbar-inner">
+      <a href="index.html" class="brand">Fundamentals of HTTP</a>
+      <div class="nav-right">
+        <button class="badge" aria-label="Toggle light/dark theme" onclick="toggleTheme()">
+          🌙 / ☀️ Theme
+        </button>
 
-    <!-- Right-side controls (theme + hamburger) -->
-    <div class="navbar-controls">
-      <button class="badge theme-toggle"
-              aria-label="Toggle light/dark theme"
-              onclick="toggleTheme()">
-        🌙 / ☀️ Theme
-      </button>
+        <div class="nav-dropdown">
+          <button
+            class="nav-dropdown-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Sections ▾
+          </button>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="index.html" role="menuitem">Home</a>
+            <a href="concepts.html" role="menuitem">Key Concepts</a>
+            <a href="http-methods.html" role="menuitem">HTTP Methods</a>
+            <a href="status-codes.html" role="menuitem">Status Codes</a>
+            <a href="seos.html" role="menuitem">SEOs</a>
+            <a href="cookies.html" role="menuitem">Cookies</a>
+            <a href="https-security.html" role="menuitem">Security &amp; HTTPS</a>
+            <a href="quiz-section.html" role="menuitem">Quiz</a>
+            <a href="references.html" role="menuitem">References</a>
+            <a href="about.html" role="menuitem">About</a>
+          </div>
+        </div>
 
-      <!-- Hamburger button (shown on small screens) -->
-      <button class="nav-toggle"
-              id="nav-toggle"
-              aria-label="Toggle navigation menu"
-              aria-expanded="false"
-              aria-controls="main-nav">
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-      </button>
+      </div>
     </div>
+  </header>
 
-    <!-- Main navigation -->
-    <nav id="main-nav" aria-label="Main" class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="concepts.html">Key Concepts</a>
-      <a href="http-methods.html">HTTP Methods</a>
-      <a href="status-codes.html">Status Codes</a>
-      <a href="seos.html">SEOs</a>
-      <a href="cookies.html">Cookies</a>
-      <a href="quiz-section.html">Quiz</a>
-      <a href="references.html">References</a>
-      <a href="about.html">About</a>
-    </nav>
-  </div>
-</header>
   <header class="page">
     <h1>SEOs — Search Engine Optimization</h1>
   </header>
-  <main class="container prose">
-    <p>Search Engine Optimization (SEO) ensures that pages can be discovered, crawled, and indexed correctly. Also that their content matches the searcher's intent. Below is a quick operator board showing how major search engines handle crawl/index directives.</p>
+
+  <main id="main" class="container prose">
+    <p>
+      Search Engine Optimization (SEO) ensures that pages can be discovered, crawled, indexed,
+      and ranked correctly — and that their content aligns with the user’s search intent.
+      Below is a comparison of how major search engines treat core indexing directives.
+    </p>
 
     <div class="table-wrap" role="region" aria-label="SEO engines board">
       <table class="table">
@@ -68,32 +72,32 @@
           <tr>
             <td>Google</td>
             <td><code>Googlebot</code></td>
-            <td>Respected. Disallow prevents crawling (not indexing if known via links).</td>
-            <td><code>index/noindex</code>, <code>follow/nofollow</code>, <code>noarchive</code> supported.</td>
-            <td>Preferred for duplicate control.</td>
-            <td><code>/sitemap.xml</code> &amp; <code>robots.txt</code> hint.</td>
+            <td>Respected. <code>Disallow</code> blocks crawling; known URLs may still be indexed without content.</td>
+            <td><code>index/noindex</code>, <code>follow/nofollow</code>, <code>noarchive</code>.</td>
+            <td>Preferred signal for duplicate/variant consolidation.</td>
+            <td><code>/sitemap.xml</code>, and <code>robots.txt</code> discovery supported.</td>
           </tr>
           <tr>
             <td>Bing</td>
             <td><code>Bingbot</code></td>
             <td>Respected similarly to Google.</td>
-            <td>Same core directives. Also supports <code>max-snippet</code>, etc.</td>
+            <td>Same directives; also supports snippet-length rules like <code>max-snippet</code>.</td>
             <td>Supported.</td>
-            <td>Supported; can submit in Bing Webmaster Tools.</td>
+            <td>Supported; can also submit through Bing Webmaster Tools.</td>
           </tr>
           <tr>
             <td>DuckDuckGo</td>
-            <td>(primarily Bing index sources)</td>
-            <td>Respected according to source crawlers.</td>
-            <td>Follows upstream crawler rules.</td>
-            <td>Follows upstream canonical signals.</td>
-            <td>Follows upstream sitemaps.</td>
+            <td>(uses Bing + partners)</td>
+            <td>Follows upstream crawlers' robots rules.</td>
+            <td>Inherited from upstream indexing sources.</td>
+            <td>Canonical respected according to upstream signals.</td>
+            <td>Same sitemap signals as upstream engines.</td>
           </tr>
           <tr>
             <td>Applebot</td>
             <td><code>Applebot</code></td>
             <td>Respected.</td>
-            <td>Core directives supported.</td>
+            <td>Supports standard indexing directives.</td>
             <td>Supported.</td>
             <td>Supported.</td>
           </tr>
@@ -101,10 +105,17 @@
       </table>
     </div>
 
-    <p><strong>Summary.</strong> The use of <code>robots.txt</code> is good to control what gets crawled, not what gets indexed; the use of <code>&lt;meta name="robots"&gt;</code> for indexing and link-follow rules on a per-page basis; declaring a <code>&lt;link rel="canonical"&gt;</code> allows to consolidate duplicates; publishing XML sitemaps makes it possible to advertise discoverable URLs. Having clean information architecture and a good content are parts of the foundation.</p>
+    <p>
+      <strong>Summary.</strong>
+      <code>robots.txt</code> governs crawling, not indexing;  
+      <code>&lt;meta name="robots"&gt;</code> governs indexing + link-following;  
+      <code>&lt;link rel="canonical"&gt;</code> consolidates duplicates and ranking signals;  
+      XML sitemaps increase discoverability.  
+      Clean information architecture and strong content remain foundational.
+    </p>
   </main>
 
-  <!-- Footer + Theme -->
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="container">
       <p>This site is a class project for IT 3203. Our course website is:
@@ -113,18 +124,24 @@
       <p>© Made in 2025 by Benel Kawata</p>
     </div>
   </footer>
-  <script defer src="assets/theme.js"></script>
-    <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const toggle = document.getElementById('nav-toggle');
-    const nav = document.getElementById('main-nav');
-    if (!toggle || !nav) return;
 
-    toggle.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  <script defer src="assets/theme.js"></script>
+  <script>
+    document.addEventListener('click', (event) => {
+      const dropdown = document.querySelector('.nav-dropdown');
+      if (!dropdown) return;
+      const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+      const menu   = dropdown.querySelector('.nav-dropdown-menu');
+      if (!toggle || !menu) return;
+      const clickedToggle = toggle.contains(event.target);
+      if (clickedToggle) {
+        const isOpen = dropdown.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+      } else if (!dropdown.contains(event.target)) {
+        dropdown.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
     });
-  });
-</script>
+  </script>
 </body>
 </html>

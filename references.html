@@ -7,60 +7,58 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <meta name="theme-color" content="#0b0d12">
 </head>
-<a class="skip-link" href="#main">Skip to main content</a>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
- <header class="navbar site-nav" role="banner">
-  <div class="wrap navbar-inner">
-    <a href="index.html" class="brand">Fundamentals of HTTP</a>
-
-    <!-- Right-side controls (theme + hamburger) -->
-    <div class="navbar-controls">
-      <button class="badge theme-toggle"
-              aria-label="Toggle light/dark theme"
-              onclick="toggleTheme()">
-        🌙 / ☀️ Theme
-      </button>
-
-      <!-- Hamburger button (shown on small screens) -->
-      <button class="nav-toggle"
-              id="nav-toggle"
-              aria-label="Toggle navigation menu"
-              aria-expanded="false"
-              aria-controls="main-nav">
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-      </button>
+  <header class="navbar site-nav" role="banner">
+    <div class="wrap navbar-inner">
+      <a href="index.html" class="brand">Fundamentals of HTTP</a>
+      <div class="nav-right">
+        <button class="badge" aria-label="Toggle light/dark theme" onclick="toggleTheme()">
+          🌙 / ☀️ Theme
+        </button>
+        <div class="nav-dropdown">
+          <button
+            class="nav-dropdown-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Sections ▾
+          </button>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="index.html" role="menuitem">Home</a>
+            <a href="concepts.html" role="menuitem">Key Concepts</a>
+            <a href="http-methods.html" role="menuitem">HTTP Methods</a>
+            <a href="status-codes.html" role="menuitem">Status Codes</a>
+            <a href="seos.html" role="menuitem">SEOs</a>
+            <a href="cookies.html" role="menuitem">Cookies</a>
+            <a href="https-security.html" role="menuitem">Security &amp; HTTPS</a>
+            <a href="quiz-section.html" role="menuitem">Quiz</a>
+            <a href="references.html" role="menuitem">References</a>
+            <a href="about.html" role="menuitem">About</a>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <!-- Main navigation -->
-    <nav id="main-nav" aria-label="Main" class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="concepts.html">Key Concepts</a>
-      <a href="http-methods.html">HTTP Methods</a>
-      <a href="status-codes.html">Status Codes</a>
-      <a href="seos.html">SEOs</a>
-      <a href="cookies.html">Cookies</a>
-      <a href="quiz-section.html">Quiz</a>
-      <a href="references.html">References</a>
-      <a href="about.html">About</a>
-    </nav>
-  </div>
-</header>
-  <main class="container prose">
-  <h1>References</h1>
-  <ul>
-    <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP">MDN — HTTP</a></li>
-    <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies">MDN — HTTP Cookies</a></li>
-    <li><a target="_blank" rel="noopener" href="https://developers.google.com/search/docs/crawling-indexing/overview-google-crawling-indexing">Google Search Central — Crawling & Indexing</a></li>
-    <li><a target="_blank" rel="noopener" href="https://www.bing.com/webmasters/help/webmaster-guidelines-30fba23a">Bing Webmaster Guidelines</a></li>
-    <li><a target="_blank" rel="noopener" href="https://support.google.com/webmasters/answer/189077">Robots meta tag, data-nosnippet, and X-Robots-Tag</a></li>
-    <li><a target="_blank" rel="noopener" href="https://www.apple.com/searchads/help/advanced/what-is-applebot/">Applebot — Overview</a></li>
-    <li><a target="_blank" rel="noopener" href="https://ico.org.uk/for-organisations/guide-to-pecr/cookies-and-similar-technologies/">ICO — Cookies & Similar Technologies (UK)</a></li>
-    <li><a target="_blank" rel="noopener" href="https://www.iabprivacy.com/">IAB — Transparency & Consent resources</a></li>
-  </ul>
-</main>
+  </header>
+  <main id="main" class="container prose">
+    <h1>References</h1>
+    <ul>
+      <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP">MDN — HTTP</a></li>
+      <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies">MDN — HTTP Cookies</a></li>
+      <li><a target="_blank" rel="noopener" href="https://developers.google.com/search/docs/crawling-indexing/overview-google-crawling-indexing">Google Search Central — Crawling &amp; Indexing</a></li>
+      <li><a target="_blank" rel="noopener" href="https://www.bing.com/webmasters/help/webmaster-guidelines-30fba23a">Bing Webmaster Guidelines</a></li>
+      <li><a target="_blank" rel="noopener" href="https://support.google.com/webmasters/answer/189077">Robots meta tag, data-nosnippet, and X-Robots-Tag</a></li>
+      <li><a target="_blank" rel="noopener" href="https://www.apple.com/searchads/help/advanced/what-is-applebot/">Applebot — Overview</a></li>
+      <li><a target="_blank" rel="noopener" href="https://ico.org.uk/for-organisations/guide-to-pecr/cookies-and-similar-technologies/">ICO — Cookies &amp; Similar Technologies (UK)</a></li>
+      <li><a target="_blank" rel="noopener" href="https://www.iabprivacy.com/">IAB — Transparency &amp; Consent resources</a></li>
+      <!-- New references -->
+      <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview">MDN — An Overview of HTTP</a></li>
+      <li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">MDN — HTTP Response Status Codes</a></li>
+      <li><a target="_blank" rel="noopener" href="https://www.rfc-editor.org/rfc/rfc9110">RFC 9110 — HTTP Semantics</a></li>
+      <li><a target="_blank" rel="noopener" href="https://letsencrypt.org/docs/">Let’s Encrypt — HTTPS &amp; Certificates Documentation</a></li>
+    </ul>
+  </main>
   <footer class="site-footer">
     <div class="container">
       <p>This site is a class project for IT 3203. Our course website is:
@@ -69,19 +67,24 @@
       <p>© Made in 2025 by Benel Kawata</p>
     </div>
   </footer>
-
   <script defer src="./assets/theme.js"></script>
-    <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const toggle = document.getElementById('nav-toggle');
-    const nav = document.getElementById('main-nav');
-    if (!toggle || !nav) return;
-
-    toggle.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  <script>
+    // Dropdown nav behaviour (same pattern as other pages)
+    document.addEventListener('click', (event) => {
+      const dropdown = document.querySelector('.nav-dropdown');
+      if (!dropdown) return;
+      const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+      const menu   = dropdown.querySelector('.nav-dropdown-menu');
+      if (!toggle || !menu) return;
+      const clickedToggle = toggle.contains(event.target);
+      if (clickedToggle) {
+        const isOpen = dropdown.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+      } else if (!dropdown.contains(event.target)) {
+        dropdown.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
     });
-  });
-</script>
+  </script>
 </body>
 </html>

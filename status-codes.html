@@ -7,92 +7,117 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <meta name="theme-color" content="#0b0d12">
 </head>
-<a class="skip-link" href="#main">Skip to main content</a>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
- <header class="navbar site-nav" role="banner">
-  <div class="wrap navbar-inner">
-    <a href="index.html" class="brand">Fundamentals of HTTP</a>
-
-    <!-- Right-side controls (theme + hamburger) -->
-    <div class="navbar-controls">
-      <button class="badge theme-toggle"
-              aria-label="Toggle light/dark theme"
-              onclick="toggleTheme()">
-        🌙 / ☀️ Theme
-      </button>
-
-      <!-- Hamburger button (shown on small screens) -->
-      <button class="nav-toggle"
-              id="nav-toggle"
-              aria-label="Toggle navigation menu"
-              aria-expanded="false"
-              aria-controls="main-nav">
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-      </button>
+  <!-- Header -->
+  <header class="navbar site-nav" role="banner">
+    <div class="wrap navbar-inner">
+      <a href="index.html" class="brand">Fundamentals of HTTP</a>
+      <div class="nav-right">
+        <button class="badge" aria-label="Toggle light/dark theme" onclick="toggleTheme()">
+          🌙 / ☀️ Theme
+        </button>
+        <div class="nav-dropdown">
+          <button
+            class="nav-dropdown-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Sections ▾
+          </button>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="index.html" role="menuitem">Home</a>
+            <a href="concepts.html" role="menuitem">Key Concepts</a>
+            <a href="http-methods.html" role="menuitem">HTTP Methods</a>
+            <a href="status-codes.html" role="menuitem">Status Codes</a>
+            <a href="seos.html" role="menuitem">SEOs</a>
+            <a href="cookies.html" role="menuitem">Cookies</a>
+            <a href="https-security.html" role="menuitem">Security &amp; HTTPS</a>
+            <a href="quiz-section.html" role="menuitem">Quiz</a>
+            <a href="references.html" role="menuitem">References</a>
+            <a href="about.html" role="menuitem">About</a>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <!-- Main navigation -->
-    <nav id="main-nav" aria-label="Main" class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="concepts.html">Key Concepts</a>
-      <a href="http-methods.html">HTTP Methods</a>
-      <a href="status-codes.html">Status Codes</a>
-      <a href="seos.html">SEOs</a>
-      <a href="cookies.html">Cookies</a>
-      <a href="quiz-section.html">Quiz</a>
-      <a href="references.html">References</a>
-      <a href="about.html">About</a>
-    </nav>
-  </div>
-</header>
+  </header>
   <main id="main" class="container">
     <article class="panel">
       <h1>Status Code Families</h1>
-      <table>
-        <caption>Overview of 1xx–5xx Classes</caption>
-        <thead>
-          <tr>
-            <th scope="col">Family</th>
-            <th scope="col">Meaning</th>
-            <th scope="col">Common Examples</th>
-            <th scope="col">Developer Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td><span class="badge">1xx</span></td><td>Informational</td><td>100 Continue</td><td>Proceed as advised</td></tr>
-          <tr><td><span class="badge">2xx</span></td><td>Success</td><td>200 OK, 201 Created</td><td>Use returned result</td></tr>
-          <tr><td><span class="badge">3xx</span></td><td>Redirection</td><td>301 Moved, 302 Found, 304 Not Modified</td><td>Follow Location / cache rules</td></tr>
-          <tr><td><span class="badge">4xx</span></td><td>Client Error</td><td>400 Bad Request, 401, 403, 404</td><td>Fix the request</td></tr>
-          <tr><td><span class="badge">5xx</span></td><td>Server Error</td><td>500, 502 Bad Gateway, 503</td><td>Retry later / investigate server</td></tr>
-        </tbody>
-      </table>
+      <div class="table-wrap" role="region" aria-label="HTTP status code families">
+        <table class="table">
+          <caption>Overview of HTTP 1xx–5xx status code classes.</caption>
+          <thead>
+            <tr>
+              <th scope="col">Family</th>
+              <th scope="col">Meaning</th>
+              <th scope="col">Common Examples</th>
+              <th scope="col">Developer Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge">1xx</span></td>
+              <td>Informational</td>
+              <td>100 Continue</td>
+              <td>Proceed as advised by the server.</td>
+            </tr>
+            <tr>
+              <td><span class="badge">2xx</span></td>
+              <td>Success</td>
+              <td>200 OK, 201 Created</td>
+              <td>Use the returned result; operation succeeded.</td>
+            </tr>
+            <tr>
+              <td><span class="badge">3xx</span></td>
+              <td>Redirection</td>
+              <td>301 Moved Permanently, 302 Found, 304 Not Modified</td>
+              <td>Follow the <code>Location</code> header and respect caching rules.</td>
+            </tr>
+            <tr>
+              <td><span class="badge">4xx</span></td>
+              <td>Client Error</td>
+              <td>400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</td>
+              <td>Fix the request (URL, parameters, auth, or payload) before retrying.</td>
+            </tr>
+            <tr>
+              <td><span class="badge">5xx</span></td>
+              <td>Server Error</td>
+              <td>500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable</td>
+              <td>Investigate server-side issues or retry later with backoff.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </article>
   </main>
-
   <footer class="site-footer">
     <div class="container">
-      <p>This site is a class project for IT 3203. Our course website is: 
+      <p>This site is a class project for IT 3203. Our course website is:
         <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.
       </p>
       <p>© Made in 2025 by Benel Kawata</p>
     </div>
   </footer>
-
   <script defer src="./assets/theme.js"></script>
-    <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const toggle = document.getElementById('nav-toggle');
-    const nav = document.getElementById('main-nav');
-    if (!toggle || !nav) return;
-
-    toggle.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  <!-- Dropdown nav behaviour (same pattern as other pages) -->
+  <script>
+    document.addEventListener('click', (event) => {
+      const dropdown = document.querySelector('.nav-dropdown');
+      if (!dropdown) return;
+      const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+      const menu   = dropdown.querySelector('.nav-dropdown-menu');
+      if (!toggle || !menu) return;
+      const clickedToggle = toggle.contains(event.target);
+      if (clickedToggle) {
+        const isOpen = dropdown.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+      } else if (!dropdown.contains(event.target)) {
+        dropdown.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
     });
-  });
-</script>
+  </script>
 </body>
 </html>

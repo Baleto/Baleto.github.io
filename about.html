@@ -7,86 +7,88 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <meta name="theme-color" content="#0b0d12">
 </head>
-<a class="skip-link" href="#main">Skip to main content</a>
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
-    <header class="navbar site-nav" role="banner">
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="navbar site-nav" role="banner">
   <div class="wrap navbar-inner">
     <a href="index.html" class="brand">Fundamentals of HTTP</a>
-
-    <!-- Right-side controls (theme + hamburger) -->
-    <div class="navbar-controls">
-      <button class="badge theme-toggle"
-              aria-label="Toggle light/dark theme"
-              onclick="toggleTheme()">
+    <div class="nav-right">
+      <button class="badge" aria-label="Toggle light/dark theme" onclick="toggleTheme()">
         🌙 / ☀️ Theme
       </button>
-
-      <!-- Hamburger button (shown on small screens) -->
-      <button class="nav-toggle"
-              id="nav-toggle"
-              aria-label="Toggle navigation menu"
-              aria-expanded="false"
-              aria-controls="main-nav">
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-      </button>
+      <div class="nav-dropdown">
+        <button
+          class="nav-dropdown-toggle"
+          type="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Sections ▾
+        </button>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="index.html" role="menuitem">Home</a>
+          <a href="concepts.html" role="menuitem">Key Concepts</a>
+          <a href="http-methods.html" role="menuitem">HTTP Methods</a>
+          <a href="status-codes.html" role="menuitem">Status Codes</a>
+          <a href="seos.html" role="menuitem">SEOs</a>
+          <a href="cookies.html" role="menuitem">Cookies</a>
+          <a href="https-security.html" role="menuitem">Security and HTTPS</a>
+          <a href="quiz-section.html" role="menuitem">Quiz</a>
+          <a href="references.html" role="menuitem">References</a>
+          <a href="about.html" role="menuitem">About</a>
+        </div>
+      </div>
     </div>
-
-    <!-- Main navigation -->
-    <nav id="main-nav" aria-label="Main" class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="concepts.html">Key Concepts</a>
-      <a href="http-methods.html">HTTP Methods</a>
-      <a href="status-codes.html">Status Codes</a>
-      <a href="seos.html">SEOs</a>
-      <a href="cookies.html">Cookies</a>
-      <a href="quiz-section.html">Quiz</a>
-      <a href="references.html">References</a>
-      <a href="about.html">About</a>
-    </nav>
   </div>
 </header>
-  <main id="main" class="container">
-    <section class="panel">
-      <h1>About This Project</h1>
-      <p class="lead">This project aims to provide detailed information about core web components such as HTTP, presented in a concise, accessible website.</p>
-
-      <h2>Benel Kawata</h2>
-      <ul>
-        <li>Transfer student from Atlanta Technical College; graduated in Cybersecurity (AAS).</li>
-        <li>Currently majoring in Information Technology at Kennesaw State University.</li>
-        <li>Skills: configure network devices such as a switch and a router from a command-line interface (CLI); mount and dismount a computer's central unit; clear communication.</li>
-        <li>Contact: <a href="mailto:you@example.com">benelkawata8@mail.com</a></li>
-      </ul>
-
-      <h3>Project Focus</h3>
-      <p>This site introduces HTTP’s request/response model, stateless nature, headers, methods, and status codes. It contrasts HTTP with HTTPS/TLS and outlines version milestones (1.1, 2, and 3).</p>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>This site is a class project for IT 3203. Our course website is:
-        <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.
-      </p>
-      <p>© Made in 2025 by Benel Kawata</p>
-    </div>
-  </footer>
-
-  <script defer src="./assets/theme.js"></script>
-    <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const toggle = document.getElementById('nav-toggle');
-    const nav = document.getElementById('main-nav');
-    if (!toggle || !nav) return;
-
-    toggle.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-  });
+<main id="main" class="container">
+  <section class="panel">
+    <h1>About This Project</h1>
+    <p class="lead">
+      This project aims to provide clear, accessible information about core web components such as HTTP,
+      presented through an intuitive and compact educational website.
+    </p>
+    <h2>Benel Kawata</h2>
+    <ul>
+      <li>Transfer student from Atlanta Technical College; graduated in Cybersecurity (AAS).</li>
+      <li>Currently majoring in Information Technology at Kennesaw State University.</li>
+      <li>Skills: configure network devices such as switches and routers via CLI; assemble and disassemble computer hardware; clear, professional communication.</li>
+      <li>Contact: <a href="mailto:benelkawata8@mail.com">benelkawata8@mail.com</a></li>
+    </ul>
+    <h3>Project Focus</h3>
+    <p>
+      This site introduces HTTP’s request/response model, its stateless nature, headers, methods, and
+      status codes. It contrasts HTTP with HTTPS/TLS and covers version improvements across HTTP/1.1,
+      HTTP/2, and HTTP/3—emphasizing performance, security, and modern web standards.
+    </p>
+  </section>
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      This site is a class project for IT 3203. Our course website is:
+      <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.
+    </p>
+    <p>© Made in 2025 by Benel Kawata</p>
+  </div>
+</footer>
+<script defer src="./assets/theme.js"></script>
+<!-- Dropdown nav behavior -->
+<script>
+document.addEventListener('click', (event) => {
+  const dropdown = document.querySelector('.nav-dropdown');
+  if (!dropdown) return;
+  const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+  const menu   = dropdown.querySelector('.nav-dropdown-menu');
+  const clickedToggle = toggle.contains(event.target);
+  if (clickedToggle) {
+    const isOpen = dropdown.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  } else if (!dropdown.contains(event.target)) {
+    dropdown.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+});
 </script>
 </body>
 </html>

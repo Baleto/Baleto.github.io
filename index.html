@@ -10,58 +10,66 @@
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
   <!-- Header -->
- <header class="navbar site-nav" role="banner">
-  <div class="wrap navbar-inner">
-    <a href="index.html" class="brand">Fundamentals of HTTP</a>
-
-    <!-- Right-side controls (theme + hamburger) -->
-    <div class="navbar-controls">
-      <button class="badge theme-toggle"
-              aria-label="Toggle light/dark theme"
-              onclick="toggleTheme()">
-        🌙 / ☀️ Theme
-      </button>
-
-      <!-- Hamburger button (shown on small screens) -->
-      <button class="nav-toggle"
-              id="nav-toggle"
-              aria-label="Toggle navigation menu"
-              aria-expanded="false"
-              aria-controls="main-nav">
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-      </button>
+  <header class="navbar site-nav" role="banner">
+    <div class="wrap navbar-inner">
+      <a href="index.html" class="brand">Fundamentals of HTTP</a>
+      <div class="nav-right">
+        <button
+          class="badge"
+          aria-label="Toggle light/dark theme"
+          onclick="toggleTheme()"
+        >
+          🌙 / ☀️ Theme
+        </button>
+        <!-- Dropdown nav -->
+        <div class="nav-dropdown">
+          <button
+            class="nav-dropdown-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Sections ▾
+          </button>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="index.html" role="menuitem">Home</a>
+            <a href="concepts.html" role="menuitem">Key Concepts</a>
+            <a href="http-methods.html" role="menuitem">HTTP Methods</a>
+            <a href="status-codes.html" role="menuitem">Status Codes</a>
+            <a href="seos.html" role="menuitem">SEOs</a>
+            <a href="cookies.html" role="menuitem">Cookies</a>
+            <a href="https-security.html" role="menuitem">Security &amp; HTTPS</a>
+            <a href="quiz-section.html" role="menuitem">Quiz</a>
+            <a href="references.html" role="menuitem">References</a>
+            <a href="about.html" role="menuitem">About</a>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <!-- Main navigation -->
-    <nav id="main-nav" aria-label="Main" class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="concepts.html">Key Concepts</a>
-      <a href="http-methods.html">HTTP Methods</a>
-      <a href="status-codes.html">Status Codes</a>
-      <a href="seos.html">SEOs</a>
-      <a href="cookies.html">Cookies</a>
-      <a href="quiz-section.html">Quiz</a>
-      <a href="references.html">References</a>
-      <a href="about.html">About</a>
-    </nav>
-  </div>
-</header>
+  </header>
   <main id="main" class="container">
-    <!-- Hero -->
     <section class="hero">
       <div class="panel">
         <h1>Hypertext Transfer Protocol (HTTP)</h1>
         <p class="lead">
-          The blueprint for HTTP was written by Tim Berners-Lee in 1989 as part of the original Web proposal; the first implementation shipped in 1991. HTTP is the application-layer protocol that carries requests and responses between clients and servers.
+          The blueprint for HTTP was written by Tim Berners-Lee in 1989 as part
+          of the original Web proposal; the first implementation shipped in
+          1991. HTTP is the application-layer protocol that carries requests and
+          responses between clients and servers.
         </p>
         <p class="lead">
-          HTTPS is HTTP over TLS—same semantics, with transport encryption and integrity.
+          HTTPS is HTTP over TLS—same semantics, with transport encryption and
+          integrity.
         </p>
         <ul>
-          <li><strong>Key Terms</strong>: Requests, Responses, Methods, Headers, Status Codes, Statelessness, HTTPS/TLS, Versions</li>
-          <li><strong>Objective</strong>: Provide clear, credible explanations and resources about HTTP and adjacent web fundamentals.</li>
+          <li>
+            <strong>Key Terms</strong>: Requests, Responses, Methods, Headers,
+            Status Codes, Statelessness, HTTPS/TLS, Versions
+          </li>
+          <li>
+            <strong>Objective</strong>: Provide clear, credible explanations and
+            resources about HTTP and adjacent web fundamentals.
+          </li>
         </ul>
       </div>
       <img
@@ -70,15 +78,23 @@
         class="hero-img"
       />
     </section>
-    <!--Overview slideshow (HTTP • SEOs • Cookies)-->
+    <!-- Overview slideshow (HTTP • SEOs • Cookies • HTTPS) -->
     <section class="panel slideshow" aria-labelledby="slideshow-heading">
       <div class="slideshow-head">
         <h2 id="slideshow-heading">At-a-glance Overviews</h2>
       </div>
-
-      <div class="slider" role="region" aria-label="HTTP, SEOs and Cookies overview">
+      <div
+        class="slider"
+        role="region"
+        aria-label="HTTP, SEOs, Cookies and Security &amp; HTTPS overview"
+      >
         <!-- Slides -->
-        <figure class="slide is-active" data-title="HTTP" data-index="0">
+        <figure
+          class="slide is-active"
+          id="slide-0"
+          data-title="HTTP"
+          data-index="0"
+        >
           <img
             src="assets/img/hero.png"
             alt="HTTP request/response diagram"
@@ -86,11 +102,23 @@
           />
           <figcaption class="slide-caption">
             <h3>HTTP</h3>
-            <p><strong>Conceived by:</strong> Tim Berners-Lee &amp; CERN (1989 → 1991)</p>
-            <p><strong>What it does:</strong> Defines the request–response semantics for the Web (methods, status codes, headers) so browsers and servers can talk.</p>
+            <p>
+              <strong>Conceived by:</strong> Tim Berners-Lee &amp; CERN
+              (1989 → 1991)
+            </p>
+            <p>
+              <strong>What it does:</strong> Defines the request–response
+              semantics for the Web (methods, status codes, headers) so browsers
+              and servers can talk.
+            </p>
           </figcaption>
         </figure>
-        <figure class="slide" data-title="SEOs" data-index="1">
+        <figure
+          class="slide"
+          id="slide-1"
+          data-title="SEOs"
+          data-index="1"
+        >
           <img
             src="assets/img/SEO_diagram.png"
             alt="SEO diagram showing crawling, indexing, and ranking"
@@ -98,35 +126,107 @@
           />
           <figcaption class="slide-caption">
             <h3>SEOs</h3>
-            <p><strong>Driven by:</strong> Search engines (e.g., Google, Bing) &amp; site owners</p>
-            <p><strong>What it does:</strong> Improves discoverability by optimizing how pages are crawled, indexed, and ranked for relevant queries.</p>
+            <p>
+              <strong>Driven by:</strong> Search engines (e.g., Google, Bing)
+              &amp; site owners
+            </p>
+            <p>
+              <strong>What it does:</strong> Improves discoverability by
+              optimizing how pages are crawled, indexed, and ranked for
+              relevant queries.
+            </p>
           </figcaption>
         </figure>
-
-        <figure class="slide" data-title="Cookies" data-index="2">
+        <figure
+          class="slide"
+          id="slide-2"
+          data-title="Cookies"
+          data-index="2"
+        >
           <img
             src="assets/img/Cookies_diagram.png"
-            alt="Cookies flow chart showing consent banner, browser, server and attributes"
+            alt="Cookies flow chart showing consent, browser, server and attributes"
             loading="lazy"
           />
           <figcaption class="slide-caption">
             <h3>Cookies</h3>
-            <p><strong>Origin:</strong> Netscape (Lou Montulli), mid-1990s</p>
-            <p><strong>What it does:</strong> Adds state to the stateless web—sessions, preferences, analytics—governed by attributes and consent.</p>
+            <p>
+              <strong>Origin:</strong> Netscape (Lou Montulli), mid-1990s
+            </p>
+            <p>
+              <strong>What it does:</strong> Adds state to the stateless
+              web—sessions, preferences, analytics—governed by attributes and
+              consent.
+            </p>
+          </figcaption>
+        </figure>
+        <figure
+          class="slide"
+          id="slide-3"
+          data-title="Security &amp; HTTPS"
+          data-index="3"
+        >
+          <img
+            src="assets/img/https-diagram.png"
+            alt="HTTPS diagram showing a secure TLS tunnel with lock icon and certificate"
+            loading="lazy"
+          />
+          <figcaption class="slide-caption">
+            <h3>Security &amp; HTTPS</h3>
+            <p>
+              <strong>Built on:</strong> TLS (Transport Layer Security), X.509 certificates, trusted CAs.
+            </p>
+            <p>
+              <strong>What it does:</strong> Encrypts and authenticates HTTP traffic, protecting
+              confidentiality and integrity while enabling modern browser security features.
+            </p>
           </figcaption>
         </figure>
         <!-- Controls -->
-        <button class="slide-btn prev" aria-label="Previous slide" title="Previous (←)">❮</button>
-        <button class="slide-btn next" aria-label="Next slide" title="Next (→)">❯</button>
+        <button
+          class="slide-btn prev"
+          aria-label="Previous slide"
+          title="Previous (←)"
+        >
+          ❮
+        </button>
+        <button
+          class="slide-btn next"
+          aria-label="Next slide"
+          title="Next (→)"
+        >
+          ❯
+        </button>
         <!-- Dots -->
         <div class="dots" role="tablist" aria-label="Slide selector">
-          <button class="dot is-active" role="tab" aria-controls="slide-0" aria-label="HTTP"></button>
-          <button class="dot" role="tab" aria-controls="slide-1" aria-label="SEOs"></button>
-          <button class="dot" role="tab" aria-controls="slide-2" aria-label="Cookies"></button>
+          <button
+            class="dot is-active"
+            role="tab"
+            aria-controls="slide-0"
+            aria-label="HTTP"
+          ></button>
+          <button
+            class="dot"
+            role="tab"
+            aria-controls="slide-1"
+            aria-label="SEOs"
+          ></button>
+          <button
+            class="dot"
+            role="tab"
+            aria-controls="slide-2"
+            aria-label="Cookies"
+          ></button>
+          <button
+            class="dot"
+            role="tab"
+            aria-controls="slide-3"
+            aria-label="Security &amp; HTTPS"
+          ></button>
         </div>
       </div>
     </section>
-    <!-- Table Of Content -->
+    <!-- Table Of Contents -->
     <section class="panel">
       <h2>Table of Contents</h2>
       <div class="toc-grid">
@@ -142,6 +242,10 @@
           <h3>Status Codes</h3>
           <p class="lead">What the 1xx–5xx classes mean and when they appear.</p>
         </a>
+        <a class="card" href="https-security.html">
+          <h3>Security &amp; HTTPS</h3>
+          <p class="lead">TLS, certificates, HSTS, mixed content, secure-by-default patterns.</p>
+        </a>
         <a class="card" href="seos.html">
           <h3>Search Engine Optimizers</h3>
           <p class="lead">Discoverability, crawling, indexing, meta robots, canonical, sitemaps.</p>
@@ -152,7 +256,7 @@
         </a>
         <a class="card" href="quiz-section.html">
           <h3>Quiz</h3>
-          <p class="lead">Randomized questions across HTTP, SEOs, and Cookies.</p>
+          <p class="lead">Randomized questions across HTTP, SEOs, Cookies, and Security &amp; HTTPS.</p>
         </a>
         <a class="card" href="references.html">
           <h3>References &amp; Resources</h3>
@@ -160,7 +264,7 @@
         </a>
         <a class="card" href="about.html">
           <h3>About</h3>
-          <p class="lead">Some information about the man behind the scene.</p>
+          <p class="lead">Some information about me.</p>
         </a>
       </div>
     </section>
@@ -170,7 +274,13 @@
     <div class="container">
       <p>
         This site is a class project for IT 3203. Our course website is:
-        <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.
+        <a
+          target="_blank"
+          rel="noopener"
+          href="https://ksuweb.github.io/IT3203/"
+        >
+          KSU IT 3203
+        </a>.
       </p>
       <p>© Made in 2025 by Benel Kawata</p>
     </div>
@@ -190,7 +300,9 @@
       const clamp = n => (n + slides.length) % slides.length;
       function show(n, focusDot = false) {
         i = clamp(n);
-        slides.forEach((s, idx) => s.classList.toggle('is-active', idx === i));
+        slides.forEach((s, idx) =>
+          s.classList.toggle('is-active', idx === i)
+        );
         dots.forEach((d, idx) => {
           d.classList.toggle('is-active', idx === i);
           if (focusDot && idx === i) d.focus();
@@ -198,26 +310,33 @@
       }
       prev.addEventListener('click', () => show(i - 1));
       next.addEventListener('click', () => show(i + 1));
-      dots.forEach((d, idx) => d.addEventListener('click', () => show(idx, true)));
-      // Keyboard support (arrow keys)
+      dots.forEach((d, idx) =>
+        d.addEventListener('click', () => show(idx, true))
+      );
       slider.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft')  { e.preventDefault(); show(i - 1); }
         if (e.key === 'ArrowRight') { e.preventDefault(); show(i + 1); }
       });
-      // Resize guard for images
+
       window.addEventListener('load', () => show(0));
     })();
   </script>
+  <!-- Dropdown nav behaviour (shared pattern) -->
   <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const toggle = document.getElementById('nav-toggle');
-    const nav = document.getElementById('main-nav');
-    if (!toggle || !nav) return;
-    toggle.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    document.addEventListener('click', (event) => {
+      const dropdown = document.querySelector('.nav-dropdown');
+      if (!dropdown) return;
+      const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+      const menu   = dropdown.querySelector('.nav-dropdown-menu');
+      const clickedToggle = toggle.contains(event.target);
+      if (clickedToggle) {
+        const isOpen = dropdown.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+      } else if (!dropdown.contains(event.target)) {
+        dropdown.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
     });
-  });
-</script>
+  </script>
 </body>
 </html>

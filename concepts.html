@@ -7,85 +7,157 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <meta name="theme-color" content="#0b0d12">
 </head>
-<a class="skip-link" href="#main">Skip to main content</a>
 <body>
-  <a class="skip-link" href="#main">Skip to main content</a>
-    <header class="navbar site-nav" role="banner">
+<a class="skip-link" href="#main">Skip to main content</a>
+<header class="navbar site-nav" role="banner">
   <div class="wrap navbar-inner">
     <a href="index.html" class="brand">Fundamentals of HTTP</a>
-
-    <!-- Right-side controls (theme + hamburger) -->
-    <div class="navbar-controls">
-      <button class="badge theme-toggle"
-              aria-label="Toggle light/dark theme"
-              onclick="toggleTheme()">
+    <div class="nav-right">
+      <button class="badge" aria-label="Toggle light/dark theme" onclick="toggleTheme()">
         🌙 / ☀️ Theme
       </button>
-
-      <!-- Hamburger button (shown on small screens) -->
-      <button class="nav-toggle"
-              id="nav-toggle"
-              aria-label="Toggle navigation menu"
-              aria-expanded="false"
-              aria-controls="main-nav">
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-        <span class="nav-toggle-bar"></span>
-      </button>
+      <div class="nav-dropdown">
+        <button
+          class="nav-dropdown-toggle"
+          type="button"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Sections ▾
+        </button>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="index.html" role="menuitem">Home</a>
+          <a href="concepts.html" role="menuitem">Key Concepts</a>
+          <a href="http-methods.html" role="menuitem">HTTP Methods</a>
+          <a href="status-codes.html" role="menuitem">Status Codes</a>
+          <a href="seos.html" role="menuitem">SEOs</a>
+          <a href="cookies.html" role="menuitem">Cookies</a>
+          <a href="https-security.html" role="menuitem">Security &amp; HTTPS</a>
+          <a href="quiz-section.html" role="menuitem">Quiz</a>
+          <a href="references.html" role="menuitem">References</a>
+          <a href="about.html" role="menuitem">About</a>
+        </div>
+      </div>
     </div>
-
-    <!-- Main navigation -->
-    <nav id="main-nav" aria-label="Main" class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="concepts.html">Key Concepts</a>
-      <a href="http-methods.html">HTTP Methods</a>
-      <a href="status-codes.html">Status Codes</a>
-      <a href="seos.html">SEOs</a>
-      <a href="cookies.html">Cookies</a>
-      <a href="quiz-section.html">Quiz</a>
-      <a href="references.html">References</a>
-      <a href="about.html">About</a>
-    </nav>
   </div>
 </header>
-  <main id="main" class="container">
-    <article class="panel">
-      <h1>Core Concepts</h1>
-      <ol>
-        <li><strong>Application Layer Role.</strong> HTTP operates at the application layer, enabling web clients and servers to exchange data using a standardized request/response model.</li>
-        <li><strong>Statelessness.</strong> Each request is independent. State is carried by tokens or cookies rather than the protocol itself.</li>
-        <li><strong>Request & Response.</strong> A request line + headers + optional body; the server replies with a status line + headers + optional body.</li>
-        <li><strong>Headers.</strong> Metadata that governs behavior (e.g., <span class="kbd">Content-Type</span>, <span class="kbd">Authorization</span>, <span class="kbd">Cache-Control</span>).</li>
-        <li><strong>HTTP vs HTTPS.</strong> HTTPS is HTTP over TLS, providing confidentiality, integrity, and server authenticity.</li>
-        <li><strong>Versions.</strong> HTTP/1.1 (persistent connections), HTTP/2 (binary framing/multiplexing), HTTP/3 (QUIC/UDP transport).</li>
-        <li><strong>Caching (Brief).</strong> Validators and cache directives reduce latency and bandwidth when used correctly.</li>
-      </ol>
-      <blockquote>
-        “HTTP is a stateless request/response protocol, which means that each request is treated independently, and information is not retained between sessions. The use of <strong>cookies</strong> is crucial for such needs.”
-      </blockquote>
-    </article>
-  </main>
+<main id="main" class="container">
+  <!-- Core concepts list -->
+  <article class="panel">
+    <h1>Core Concepts</h1>
+    <ol>
+      <li><strong>Application Layer Role.</strong> HTTP defines how applications—such as browsers and servers—communicate using a structured request/response pattern.</li>
+      <li><strong>Statelessness.</strong> Requests are independent; state is not stored by the protocol but added via cookies, sessions, or tokens.</li>
+      <li><strong>Request & Response.</strong> Requests contain a method, path, headers, and optional body. Responses contain a status line, headers, and optional body.</li>
+      <li><strong>Headers.</strong> Metadata controlling behavior, content negotiation, caching, security, and authorization.</li>
+      <li><strong>HTTP vs HTTPS.</strong> HTTPS wraps HTTP in TLS, adding encryption, integrity, and server authentication.</li>
+      <li><strong>Versions.</strong> HTTP/1.1, HTTP/2, and HTTP/3 introduce performance improvements like multiplexing and QUIC.</li>
+      <li><strong>Caching (Brief).</strong> Cache directives and validators reduce bandwidth usage and improve page load speed.</li>
+    </ol>
+    <blockquote>
+      “HTTP is a stateless request/response protocol. Persistence relies on mechanisms such as cookies or tokens layered on top of it.”
+    </blockquote>
+  </article>
+  <!-- In-depth section -->
+  <section class="panel" style="margin-top: 1.5rem;">
+    <h2>In-Depth Explanations</h2>
+    <!-- 1 -->
+    <h3>1. Application Layer Role</h3>
+    <p>
+      HTTP operates at the <strong>application layer</strong>, defining the rules by which applications exchange meaningful data.  
+      It does not deal with routing or packet delivery; instead, it focuses on the structure of messages, methods, headers, and semantics.
+    </p>
+    <p>
+      Its simplicity and readability contribute to its longevity and widespread adoption across browsers, APIs, mobile apps, and IoT systems.
+    </p>
+    <!-- 2 -->
+    <h3>2. Statelessness</h3>
+    <p>
+      HTTP does not preserve server-side memory of past interactions.  
+      All necessary context must be sent with each request, including headers, cookies, tokens, or query parameters.
+    </p>
+    <p>
+      Statelessness increases scalability, reliability, and horizontal distribution across multiple servers.
+    </p>
+    <!-- 3 -->
+    <h3>3. Request & Response</h3>
+    <p>
+      Each HTTP transaction follows a predictable pattern:
+    </p>
+    <ul>
+      <li><strong>Request line</strong>: method, path, and protocol version</li>
+      <li><strong>Headers</strong>: metadata for negotiation, caching, security, and more</li>
+      <li><strong>Body</strong>: optional, used in methods such as POST or PUT</li>
+    </ul>
+    <p>
+      The server replies with a status code, headers, and optional body.  
+      This model underpins REST APIs, websites, and cloud services.
+    </p>
+    <!-- 4 -->
+    <h3>4. Headers</h3>
+    <p>
+      Headers dictate <strong>how</strong> a request or response should behave.  
+      They control caching, security, content negotiation, authentication, and connection rules.
+    </p>
+    <ul>
+      <li><strong>Content headers</strong>: <code>Content-Type</code>, <code>Content-Length</code></li>
+      <li><strong>Security headers</strong>: <code>Strict-Transport-Security</code>, <code>X-Frame-Options</code></li>
+      <li><strong>Authentication headers</strong>: <code>Authorization</code>, <code>WWW-Authenticate</code></li>
+      <li><strong>Caching headers</strong>: <code>ETag</code>, <code>Cache-Control</code>, <code>Expires</code></li>
+    </ul>
+    <!-- 5 -->
+    <h3>5. HTTP vs HTTPS</h3>
+    <p>
+      HTTPS encrypts traffic using <strong>TLS</strong>.  
+      It prevents eavesdropping, tampering, and impersonation. Modern browsers require HTTPS for service workers, geolocation APIs, HTTP/2, and many security-critical features.
+    </p>
+    <!-- 6 -->
+    <h3>6. Versions</h3>
+    <ul>
+      <li><strong>HTTP/1.1</strong> — persistent connections, chunked encoding, host header</li>
+      <li><strong>HTTP/2</strong> — binary framing, multiplexing, header compression</li>
+      <li><strong>HTTP/3</strong> — based on QUIC over UDP, faster connection establishment, better packet recovery</li>
+    </ul>
+    <!-- 7 -->
+    <h3>7. Caching (Detailed)</h3>
+    <p>
+      Caching is a critical performance mechanism. It enables browsers or intermediaries to reuse responses without re-fetching them.
+    </p>
+    <ul>
+      <li><code>Cache-Control</code> — max-age, private/public, no-store, no-cache</li>
+      <li><code>ETag</code> — validator token to detect changes</li>
+      <li><code>Last-Modified</code> — timestamp-based validator</li>
+      <li><code>Expires</code> — older mechanism replaced by Cache-Control</li>
+    </ul>
+  </section>
 
-  <footer class="site-footer">
-    <div class="container">
-      <p>This site is a class project for IT 3203. Our course website is: 
-        <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.
-      </p>
-      <p>© Made in 2025 by Benel Kawata</p>
-    </div>
-  </footer>
-  <script defer src="./assets/theme.js"></script>
-    <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const toggle = document.getElementById('nav-toggle');
-    const nav = document.getElementById('main-nav');
-    if (!toggle || !nav) return;
-
-    toggle.addEventListener('click', () => {
-      const isOpen = nav.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-  });
+</main>
+<footer class="site-footer">
+  <div class="container">
+    <p>
+      This site is a class project for IT 3203. Our course website is:
+      <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.
+    </p>
+    <p>© Made in 2025 by Benel Kawata</p>
+  </div>
+</footer>
+<script defer src="./assets/theme.js"></script>
+<!-- Dropdown nav behavior -->
+<script>
+document.addEventListener('click', (event) => {
+  const dropdown = document.querySelector('.nav-dropdown');
+  if (!dropdown) return;
+  const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+  const menu   = dropdown.querySelector('.nav-dropdown-menu');
+  const clickedToggle = toggle.contains(event.target);
+  if (clickedToggle) {
+    const isOpen = dropdown.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  } else if (!dropdown.contains(event.target)) {
+    dropdown.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+});
 </script>
 </body>
 </html>
