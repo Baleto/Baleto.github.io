@@ -75,17 +75,24 @@
       <!-- Questions injected here -->
     </form>
     <div class="quiz-actions" style="margin-top: 1rem; display:none;">
-      <button type="button" id="submit-quiz" class="quiz-mode-btn" style="max-width: 220px;">
-        Submit answers
-      <button
-  type="button"
-  id="retry-quiz"
-  class="quiz-mode-btn quiz-small"
-  style="margin-left: 0.75rem; display:none;"
->
-  Try again
-</button>
-    </div>
+  <button
+    type="button"
+    id="submit-quiz"
+    class="quiz-mode-btn"
+    style="max-width: 220px;"
+  >
+    Submit answers
+  </button>
+
+  <button
+    type="button"
+    id="retry-quiz"
+    class="quiz-mode-btn quiz-small"
+    style="margin-left: 0.75rem; display:none;"
+  >
+    Try again
+  </button>
+</div>
   </section>
 </main>
 <footer class="site-footer">
@@ -685,6 +692,6 @@ function showResultPopup(message) {
   msgEl.textContent = message;
 }
 </script>
+<button class="to-top" aria-label="Back to top">↑</button>
 </body>
-  <button class="to-top" aria-label="Back to top">↑</button>
 </html>
