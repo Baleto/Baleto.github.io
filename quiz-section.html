@@ -7,15 +7,19 @@
   <meta name="theme-color" content="#0b0d12">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
+
 <header class="navbar site-nav" role="banner">
   <div class="wrap navbar-inner">
     <a href="index.html" class="brand">Fundamentals of HTTP</a>
+
     <div class="nav-right">
       <button class="badge" aria-label="Toggle light/dark theme" onclick="toggleTheme()">
         🌙 / ☀️ Theme
       </button>
+
       <div class="nav-dropdown">
         <button
           class="nav-dropdown-toggle"
@@ -25,22 +29,24 @@
         >
           Sections ▾
         </button>
+
         <div class="nav-dropdown-menu" role="menu">
           <a href="index.html" role="menuitem">Home</a>
-            <a href="concepts.html" role="menuitem">Concepts</a>
-            <a href="http-methods.html" role="menuitem">Methods</a>
-            <a href="status-codes.html" role="menuitem">Codes</a>
-            <a href="seos.html" role="menuitem">SEOs</a>
-            <a href="cookies.html" role="menuitem">Cookies</a>
-            <a href="https-security.html" role="menuitem">HTTPS</a>
-            <a href="quiz-section.html" role="menuitem">Quiz</a>
-            <a href="references.html" role="menuitem">References</a>
-            <a href="about.html" role="menuitem">About</a>
+          <a href="concepts.html" role="menuitem">Key Concepts</a>
+          <a href="http-methods.html" role="menuitem">HTTP Methods</a>
+          <a href="status-codes.html" role="menuitem">Status Codes</a>
+          <a href="seos.html" role="menuitem">SEOs</a>
+          <a href="cookies.html" role="menuitem">Cookies</a>
+          <a href="https-security.html" role="menuitem">Security &amp; HTTPS</a>
+          <a href="quiz-section.html" role="menuitem">Quiz</a>
+          <a href="references.html" role="menuitem">References</a>
+          <a href="about.html" role="menuitem">About</a>
         </div>
       </div>
     </div>
   </div>
 </header>
+
 <main id="main" class="container">
   <section class="panel">
     <h1>Interactive Quiz Section</h1>
@@ -48,70 +54,85 @@
       HTTP (15 questions) · SEOs (15 questions) · Cookies (15 questions) · Security &amp; HTTPS (15 questions) —
       or a mixed knowledge check (30 questions).
     </p>
+
     <div class="quiz-mode-list">
-      <button class="quiz-mode-btn" data-mode="checkpoint">
+      <button class="quiz-mode-btn" type="button" data-mode="checkpoint">
         Knowledge check – Quiz (30 questions)
       </button>
-      <button class="quiz-mode-btn" data-mode="http">
+
+      <button class="quiz-mode-btn" type="button" data-mode="http">
         Fundamentals of HTTP – Quiz (15 questions)
       </button>
-      <button class="quiz-mode-btn" data-mode="seo">
+
+      <button class="quiz-mode-btn" type="button" data-mode="seo">
         SEOs Fundamentals – Quiz (15 questions)
       </button>
-      <button class="quiz-mode-btn" data-mode="cookies">
+
+      <button class="quiz-mode-btn" type="button" data-mode="cookies">
         Cookies Fundamentals – Quiz (15 questions)
       </button>
-      <button class="quiz-mode-btn" data-mode="https">
+
+      <button class="quiz-mode-btn" type="button" data-mode="https">
         Security &amp; HTTPS – Quiz (15 questions)
       </button>
     </div>
   </section>
+
   <section id="quiz-panel" class="panel" style="margin-top: 1.5rem; display:none;">
     <header class="quiz-header">
       <h2 id="quiz-title">Quiz</h2>
       <p class="lead" id="quiz-subtitle"></p>
     </header>
+
     <form id="quiz-form" class="quiz-form">
       <!-- Questions injected here -->
     </form>
-    <div class="quiz-actions" style="margin-top: 1rem; display:none;">
-  <button
-    type="button"
-    id="submit-quiz"
-    class="quiz-mode-btn"
-    style="max-width: 220px;"
-  >
-    Submit answers
-  </button>
 
-  <button
-    type="button"
-    id="retry-quiz"
-    class="quiz-mode-btn quiz-small"
-    style="margin-left: 0.75rem; display:none;"
-  >
-    Try again
-  </button>
-</div>
+    <div class="quiz-actions" style="margin-top: 1rem; display:none;">
+      <button
+        type="button"
+        id="submit-quiz"
+        class="quiz-mode-btn"
+        style="max-width: 220px;"
+      >
+        Submit answers
+      </button>
+
+      <button
+        type="button"
+        id="retry-quiz"
+        class="quiz-mode-btn quiz-small"
+        style="margin-left: 0.75rem; display:none;"
+      >
+        Try again
+      </button>
+    </div>
   </section>
 </main>
+
 <footer class="site-footer">
   <div class="container">
-    <p>This site is a class project for IT 3203. Our course website is:
+    <p>
+      This site is a class project for IT 3203. Our course website is:
       <a target="_blank" rel="noopener" href="https://ksuweb.github.io/IT3203/">KSU IT 3203</a>.
     </p>
     <p>© Made in 2025 by Benel Kawata</p>
   </div>
 </footer>
+
 <script defer src="./assets/theme.js"></script>
+
 <script>
-/*Dropdown nav behaviour (shared across pages) */
+/* ===== Dropdown nav behaviour ===== */
 document.addEventListener('click', (event) => {
   const dropdown = document.querySelector('.nav-dropdown');
   if (!dropdown) return;
+
   const toggle = dropdown.querySelector('.nav-dropdown-toggle');
-  const menu   = dropdown.querySelector('.nav-dropdown-menu');
+  if (!toggle) return;
+
   const clickedToggle = toggle.contains(event.target);
+
   if (clickedToggle) {
     const isOpen = dropdown.classList.toggle('open');
     toggle.setAttribute('aria-expanded', String(isOpen));
@@ -120,536 +141,256 @@ document.addEventListener('click', (event) => {
     toggle.setAttribute('aria-expanded', 'false');
   }
 });
-/*Quiz data helper*/
+
+/* ===== Quiz data helper ===== */
 function q(text, options, answerIndex) {
   return { text, options, answerIndex };
 }
-/*15 HTTP questions*/
+
+/* ===== 15 HTTP questions ===== */
 const HTTP_QUESTIONS = [
-  q("What does HTTP stand for?", [
-    "Hypertext Transfer Protocol",
-    "Hybrid Transmission Process",
-    "Hyper Tool Transport Protocol",
-    "High-level Text Transfer Program"
-  ], 0),
-  q("Which part of an HTTP request specifies the action to perform?", [
-    "The status line",
-    "The method",
-    "The body",
-    "The query string"
-  ], 1),
-  q("Which HTTP method is typically used to retrieve data without changing it on the server?", [
-    "POST",
-    "DELETE",
-    "GET",
-    "PATCH"
-  ], 2),
-  q("Which status code family indicates a successful response?", [
-    "1xx",
-    "2xx",
-    "3xx",
-    "5xx"
-  ], 1),
-  q("In HTTP, what is a header?", [
-    "The HTML &lt;head&gt; of the page",
-    "Metadata attached to a request or response",
-    "The first line of the URL",
-    "A security-only directive"
-  ], 1),
-  q("Which header most often describes the media type of the body?", [
-    "Host",
-    "Accept-Encoding",
-    "Content-Type",
-    "User-Agent"
-  ], 2),
-  q("Why is HTTP described as stateless?", [
-    "It does not support headers",
-    "It cannot be used over the Internet",
-    "Each request is independent and not remembered by default",
-    "It uses text instead of binary"
-  ], 2),
-  q("HTTPS adds which security protocol on top of HTTP?", [
-    "TLS/SSL",
-    "FTP",
-    "SSH",
-    "SMTPS"
-  ], 0),
-  q("Which version of HTTP introduced multiplexing and binary framing?", [
-    "HTTP/0.9",
-    "HTTP/1.1",
-    "HTTP/2",
-    "HTTP/3"
-  ], 2),
-  q("Which status code means 'Not Found'?", [
-    "200",
-    "301",
-    "404",
-    "500"
-  ], 2),
-  q("What does the Host header identify?", [
-    "The user's device",
-    "The domain the client wants to reach",
-    "The HTTP method used",
-    "The size of the body"
-  ], 1),
-  q("What is the main purpose of the response body?", [
-    "To describe the URL structure",
-    "To carry the resource representation (HTML, JSON, etc.)",
-    "To track client IP addresses",
-    "To configure DNS"
-  ], 1),
-  q("Which of these is a safe and idempotent method when used correctly?", [
-    "GET",
-    "POST",
-    "PATCH",
-    "CONNECT"
-  ], 0),
-  q("Which status code is commonly used for a successful resource creation via POST?", [
-    "201 Created",
-    "202 Accepted",
-    "204 No Content",
-    "304 Not Modified"
-  ], 0),
-  q("What does a 3xx status code generally indicate?", [
-    "Client error",
-    "Server error",
-    "Information only",
-    "Redirection"
-  ], 3)
+  q("What does HTTP stand for?", ["Hypertext Transfer Protocol", "Hybrid Transmission Process", "Hyper Tool Transport Protocol", "High-level Text Transfer Program"], 0),
+  q("Which part of an HTTP request specifies the action to perform?", ["The status line", "The method", "The body", "The query string"], 1),
+  q("Which HTTP method is typically used to retrieve data without changing it on the server?", ["POST", "DELETE", "GET", "PATCH"], 2),
+  q("Which status code family indicates a successful response?", ["1xx", "2xx", "3xx", "5xx"], 1),
+  q("In HTTP, what is a header?", ["The HTML <head> of the page", "Metadata attached to a request or response", "The first line of the URL", "A security-only directive"], 1),
+  q("Which header most often describes the media type of the body?", ["Host", "Accept-Encoding", "Content-Type", "User-Agent"], 2),
+  q("Why is HTTP described as stateless?", ["It does not support headers", "It cannot be used over the Internet", "Each request is independent and not remembered by default", "It uses text instead of binary"], 2),
+  q("HTTPS adds which security protocol on top of HTTP?", ["TLS/SSL", "FTP", "SSH", "SMTPS"], 0),
+  q("Which version of HTTP introduced multiplexing and binary framing?", ["HTTP/0.9", "HTTP/1.1", "HTTP/2", "HTTP/3"], 2),
+  q("Which status code means 'Not Found'?", ["200", "301", "404", "500"], 2),
+  q("What does the Host header identify?", ["The user's device", "The domain the client wants to reach", "The HTTP method used", "The size of the body"], 1),
+  q("What is the main purpose of the response body?", ["To describe the URL structure", "To carry the resource representation such as HTML or JSON", "To track client IP addresses", "To configure DNS"], 1),
+  q("Which of these is a safe and idempotent method when used correctly?", ["GET", "POST", "PATCH", "CONNECT"], 0),
+  q("Which status code is commonly used for a successful resource creation via POST?", ["201 Created", "202 Accepted", "204 No Content", "304 Not Modified"], 0),
+  q("What does a 3xx status code generally indicate?", ["Client error", "Server error", "Information only", "Redirection"], 3)
 ];
-/*15 SEO questions*/
+
+/* ===== 15 SEO questions ===== */
 const SEO_QUESTIONS = [
-  q("What does SEO stand for?", [
-    "Search Engine Operation",
-    "Search Engine Optimization",
-    "Site Exposure Optimization",
-    "Semantic Engine Orchestration"
-  ], 1),
-  q("Which of the following is NOT typically a core SEO area?", [
-    "Crawling",
-    "Indexing",
-    "Ranking",
-    "Battery management"
-  ], 3),
-  q("What is a sitemap primarily used for?", [
-    "Listing URLs to help search engines discover content",
-    "Styling the website layout",
-    "Displaying the site menu to users",
-    "Encrypting data for HTTPS"
-  ], 0),
-  q("Which HTML element is most important for describing the page's main title to search engines?", [
-    "&lt;h1&gt;",
-    "&lt;title&gt;",
-    "&lt;meta&gt;",
-    "&lt;strong&gt;"
-  ], 1),
-  q("What does the robots meta tag 'noindex' tell search engines?", [
-    "Do not crawl this site at all",
-    "Do not show this page in search results",
-    "Delete this page from the server",
-    "Block all cookies"
-  ], 1),
-  q("What is the purpose of the robots.txt file?", [
-    "To configure HTTP headers",
-    "To instruct search engine crawlers which paths are allowed or disallowed",
-    "To define user accounts",
-    "To store access tokens"
-  ], 1),
-  q("Which best describes 'canonical URL'?", [
-    "The URL with the shortest length",
-    "The preferred URL when duplicate or similar content exists",
-    "The first URL created on the site",
-    "The URL used only for HTTPS"
-  ], 1),
-  q("'Follow' in SEO usually refers to:", [
-    "Allowing the crawler to follow links on the page",
-    "Following users on social media",
-    "Following redirects only",
-    "Following cookies policies"
-  ], 0),
-  q("Why is page performance important for SEO?", [
-    "Search engines avoid fast sites",
-    "Performance has no impact on ranking",
-    "Fast pages improve user experience and can help rankings",
-    "Performance only matters for intranets"
-  ], 2),
-  q("What is structured data (e.g., schema.org) used for?", [
-    "Compressing CSS files",
-    "Helping search engines understand content meaning and enable rich results",
-    "Encrypting JavaScript",
-    "Blocking crawlers from certain sections"
-  ], 1),
-  q("Which tag is commonly used to specify the language and region of a page for international SEO?", [
-    "&lt;meta charset&gt;",
-    "hreflang",
-    "viewport",
-    "noscript"
-  ], 1),
-  q("What is a 'title tag' in SEO terms?", [
-    "The main heading shown inside the page body",
-    "The HTML attribute on all links",
-    "The &lt;title&gt; element that appears in browser tabs and search results",
-    "A CSS class name"
-  ], 2),
-  q("What is 'organic traffic'?", [
-    "Traffic from paid ads only",
-    "Traffic coming from search engines without paid promotion",
-    "Traffic from email campaigns",
-    "Traffic from direct URL entry only"
-  ], 1),
-  q("Which factor is MOST likely to hurt SEO?", [
-    "Semantic HTML structure",
-    "Responsive design",
-    "Duplicate content without proper canonicals",
-    "Accessible alt text"
-  ], 2),
-  q("Why are descriptive link texts (instead of 'click here') better for SEO?", [
-    "They reduce image sizes",
-    "They help search engines understand context about the linked page",
-    "They block crawlers from indexing links",
-    "They disable JavaScript"
-  ], 1)
+  q("What does SEO stand for?", ["Search Engine Operation", "Search Engine Optimization", "Site Exposure Optimization", "Semantic Engine Orchestration"], 1),
+  q("Which of the following is NOT typically a core SEO area?", ["Crawling", "Indexing", "Ranking", "Battery management"], 3),
+  q("What is a sitemap primarily used for?", ["Listing URLs to help search engines discover content", "Styling the website layout", "Displaying the site menu to users", "Encrypting data for HTTPS"], 0),
+  q("Which HTML element is most important for describing the page's main title to search engines?", ["<h1>", "<title>", "<meta>", "<strong>"], 1),
+  q("What does the robots meta tag 'noindex' tell search engines?", ["Do not crawl this site at all", "Do not show this page in search results", "Delete this page from the server", "Block all cookies"], 1),
+  q("What is the purpose of the robots.txt file?", ["To configure HTTP headers", "To instruct search engine crawlers which paths are allowed or disallowed", "To define user accounts", "To store access tokens"], 1),
+  q("Which best describes 'canonical URL'?", ["The URL with the shortest length", "The preferred URL when duplicate or similar content exists", "The first URL created on the site", "The URL used only for HTTPS"], 1),
+  q("'Follow' in SEO usually refers to:", ["Allowing the crawler to follow links on the page", "Following users on social media", "Following redirects only", "Following cookies policies"], 0),
+  q("Why is page performance important for SEO?", ["Search engines avoid fast sites", "Performance has no impact on ranking", "Fast pages improve user experience and can help rankings", "Performance only matters for intranets"], 2),
+  q("What is structured data used for?", ["Compressing CSS files", "Helping search engines understand content meaning and enable rich results", "Encrypting JavaScript", "Blocking crawlers from certain sections"], 1),
+  q("Which tag is commonly used to specify language and region for international SEO?", ["<meta charset>", "hreflang", "viewport", "noscript"], 1),
+  q("What is a title tag in SEO terms?", ["The main heading shown inside the page body", "The HTML attribute on all links", "The <title> element that appears in browser tabs and search results", "A CSS class name"], 2),
+  q("What is organic traffic?", ["Traffic from paid ads only", "Traffic coming from search engines without paid promotion", "Traffic from email campaigns", "Traffic from direct URL entry only"], 1),
+  q("Which factor is MOST likely to hurt SEO?", ["Semantic HTML structure", "Responsive design", "Duplicate content without proper canonicals", "Accessible alt text"], 2),
+  q("Why are descriptive link texts better for SEO?", ["They reduce image sizes", "They help search engines understand context about the linked page", "They block crawlers from indexing links", "They disable JavaScript"], 1)
 ];
-/*15 Cookies questions*/
+
+/* ===== 15 Cookies questions ===== */
 const COOKIE_QUESTIONS = [
-  q("In HTTP, what is a cookie primarily used for?", [
-    "Styling the page layout",
-    "Maintaining state such as sessions or preferences across requests",
-    "Compressing HTML documents",
-    "Configuring DNS"
-  ], 1),
-  q("Which header is used by the server to send a cookie to the browser?", [
-    "Set-Cookie",
-    "Cookie-Policy",
-    "Authorization",
-    "X-Cookie"
-  ], 0),
-  q("Where are cookies stored?", [
-    "Inside the HTML document",
-    "In the browser's per-site storage (cookie jar)",
-    "On the server only",
-    "In the router configuration"
-  ], 1),
-  q("What does the HttpOnly attribute on a cookie do?", [
-    "Allows JavaScript to read the cookie",
-    "Prevents access to the cookie from JavaScript, reducing XSS risk",
-    "Disables the cookie over HTTPS",
-    "Marks the cookie as third-party only"
-  ], 1),
-  q("Which cookie attribute ensures a cookie is only sent over HTTPS?", [
-    "Domain",
-    "Secure",
-    "Path",
-    "Max-Age"
-  ], 1),
-  q("What does the SameSite attribute control?", [
-    "How long the cookie lasts",
-    "Which domains can resolve the cookie",
-    "Whether the cookie is sent with cross-site requests",
-    "If the cookie is compressed"
-  ], 2),
-  q("Which of the following best describes 'strictly necessary' cookies?", [
-    "Cookies used only for marketing",
-    "Cookies required for basic functionality like login or shopping cart",
-    "Cookies that never expire",
-    "Cookies that store CSS styles"
-  ], 1),
-  q("Which type of cookies are typically used to measure page views and user behavior for reports?", [
-    "Functional cookies",
-    "Analytics/measurement cookies",
-    "Strictly necessary cookies",
-    "Security cookies only"
-  ], 1),
-  q("Functional cookies are mainly used to:", [
-    "Remember user preferences such as language or theme",
-    "Block crawlers",
-    "Encrypt TLS traffic",
-    "Update DNS entries"
-  ], 0),
-  q("Performance cookies primarily help to:", [
-    "Improve loading speed and monitor technical performance",
-    "Display cookie banners",
-    "Handle payment processing",
-    "Disable caching"
-  ], 0),
-  q("Why is user consent often required for non-essential cookies in many regions?", [
-    "Because cookies break HTTPS",
-    "Because privacy laws regulate tracking and profiling",
-    "Because browsers do not allow cookies without it",
-    "Because DNS requires consent"
-  ], 1),
-  q("What does the Max-Age/Expires attribute define?", [
-    "The MIME type of the cookie",
-    "The lifetime of the cookie before it is removed",
-    "The allowed HTTP methods",
-    "The size limit of a response"
-  ], 1),
-  q("If a cookie has a Path attribute of '/account', it will:", [
-    "Be sent on all requests to the site",
-    "Only be sent for URLs under /account",
-    "Be disabled when HTTPS is used",
-    "Be visible to other domains"
-  ], 1),
-  q("Which of the following is a good practice for security-sensitive cookies such as session IDs?", [
-    "Set HttpOnly and Secure, and use SameSite appropriately",
-    "Allow access from any domain",
-    "Store them in local storage instead of cookies",
-    "Avoid setting an expiration time"
-  ], 0),
-  q("Modern browsers often restrict which type of cookies by default, especially without secure context?", [
-    "First-party cookies",
-    "Third-party tracking cookies",
-    "Session cookies",
-    "Strictly necessary cookies"
-  ], 1)
+  q("In HTTP, what is a cookie primarily used for?", ["Styling the page layout", "Maintaining state such as sessions or preferences across requests", "Compressing HTML documents", "Configuring DNS"], 1),
+  q("Which header is used by the server to send a cookie to the browser?", ["Set-Cookie", "Cookie-Policy", "Authorization", "X-Cookie"], 0),
+  q("Where are cookies stored?", ["Inside the HTML document", "In the browser's per-site storage", "On the server only", "In the router configuration"], 1),
+  q("What does the HttpOnly attribute on a cookie do?", ["Allows JavaScript to read the cookie", "Prevents JavaScript access, reducing XSS risk", "Disables the cookie over HTTPS", "Marks the cookie as third-party only"], 1),
+  q("Which cookie attribute ensures a cookie is only sent over HTTPS?", ["Domain", "Secure", "Path", "Max-Age"], 1),
+  q("What does the SameSite attribute control?", ["How long the cookie lasts", "Which domains can resolve the cookie", "Whether the cookie is sent with cross-site requests", "If the cookie is compressed"], 2),
+  q("Which best describes strictly necessary cookies?", ["Cookies used only for marketing", "Cookies required for basic functionality like login or cart", "Cookies that never expire", "Cookies that store CSS styles"], 1),
+  q("Which cookies are typically used to measure page views and behavior?", ["Functional cookies", "Analytics/measurement cookies", "Strictly necessary cookies", "Security cookies only"], 1),
+  q("Functional cookies are mainly used to:", ["Remember preferences such as language or theme", "Block crawlers", "Encrypt TLS traffic", "Update DNS entries"], 0),
+  q("Performance cookies primarily help to:", ["Improve loading speed and monitor technical performance", "Display cookie banners", "Handle payment processing", "Disable caching"], 0),
+  q("Why is consent often required for non-essential cookies?", ["Because cookies break HTTPS", "Because privacy laws regulate tracking and profiling", "Because browsers do not allow cookies without it", "Because DNS requires consent"], 1),
+  q("What does Max-Age/Expires define?", ["The MIME type of the cookie", "The lifetime of the cookie before removal", "The allowed HTTP methods", "The size limit of a response"], 1),
+  q("If a cookie has Path='/account', it will:", ["Be sent on all requests to the site", "Only be sent for URLs under /account", "Be disabled when HTTPS is used", "Be visible to other domains"], 1),
+  q("Which is good practice for session cookies?", ["Set HttpOnly and Secure, and use SameSite appropriately", "Allow access from any domain", "Store them in local storage instead", "Avoid setting an expiration time"], 0),
+  q("Modern browsers often restrict which type of cookies?", ["First-party cookies", "Third-party tracking cookies", "Session cookies", "Strictly necessary cookies"], 1)
 ];
-/*15 Security & HTTPS questions*/
+
+/* ===== 15 Security & HTTPS questions ===== */
 const HTTPS_QUESTIONS = [
-  q("What does HTTPS stand for?", [
-    "Hyper Transfer Text Protocol Secure",
-    "Hypertext Transfer Protocol Secure",
-    "High-level Text Protocol Secure",
-    "Hypertext Tunnel Protection Service"
-  ], 1),
-  q("Which protocol provides the security layer for HTTPS?", [
-    "FTP",
-    "SSH",
-    "TLS/SSL",
-    "SMTP"
-  ], 2),
-  q("Which port is most commonly used by HTTPS by default?", [
-    "21",
-    "80",
-    "443",
-    "8080"
-  ], 2),
-  q("Which of the following properties does HTTPS provide?", [
-    "Confidentiality and integrity only",
-    "Confidentiality, integrity, and server authentication",
-    "Only faster page loads",
-    "Only client authentication"
-  ], 1),
-  q("What is the role of a digital certificate in HTTPS?", [
-    "It compresses HTTP responses",
-    "It binds a public key to a domain name and is signed by a CA",
-    "It stores user passwords",
-    "It configures DNS records"
-  ], 1),
-  q("What does CA stand for in the context of HTTPS?", [
-    "Central Authority",
-    "Certificate Authority",
-    "Cipher Agency",
-    "Content Administrator"
-  ], 1),
-  q("What is the main purpose of the TLS handshake?", [
-    "To download all images on a page",
-    "To agree on cryptographic keys and verify the server identity",
-    "To minify HTML and CSS",
-    "To clear browser cache"
-  ], 1),
-  q("What does the HTTP Strict Transport Security (HSTS) header instruct the browser to do?", [
-    "Disable cookies for the site",
-    "Force all future connections to use HTTPS for a period of time",
-    "Block all JavaScript on the page",
-    "Use only HTTP/1.0 with the site"
-  ], 1),
-  q("What is mixed content on a page loaded over HTTPS?", [
-    "Images and text on the same page",
-    "Using both JSON and HTML in the response",
-    "HTTPS page loading some resources over plain HTTP",
-    "Cookies being set with multiple attributes"
-  ], 2),
-  q("Why is mixed active content (like scripts) dangerous on an HTTPS page?", [
-    "It slows down rendering only",
-    "It can break the HTML layout but is safe",
-    "It can undermine the security of the whole page",
-    "Browsers always ignore active content"
-  ], 2),
-  q("Which indicator do modern browsers typically show for a properly configured HTTPS site?", [
-    "A red warning triangle",
-    "A lock icon or 'Connection is secure' message",
-    "A blinking banner at the bottom",
-    "No visual indicator at all"
-  ], 1),
-  q("Perfect Forward Secrecy (PFS) ensures that:", [
-    "Old sessions remain protected even if long-term keys are compromised later",
-    "Certificates never expire",
-    "DNS queries are always encrypted",
-    "Cookies are always HttpOnly"
-  ], 0),
-  q("Why should HTTP traffic often be redirected to HTTPS?", [
-    "To avoid using cookies",
-    "To ensure all traffic benefits from encryption and integrity",
-    "To force browsers to disable caching",
-    "To simplify robots.txt rules"
-  ], 1),
-  q("Which of the following is a good practice for deploying HTTPS?", [
-    "Use outdated cipher suites for compatibility",
-    "Use self-signed certificates on public sites without explanation",
-    "Automate certificate renewal and prefer modern TLS configurations",
-    "Serve HTML over HTTP and only APIs over HTTPS"
-  ], 2),
-  q("Which statement best describes the relationship between HTTP and HTTPS?", [
-    "They are completely different protocols with no overlap",
-    "HTTPS is HTTP with an added TLS layer for secure transport",
-    "HTTP is built on top of DNS, while HTTPS is not",
-    "HTTPS removes the concept of headers"
-  ], 1)
+  q("What does HTTPS stand for?", ["Hyper Transfer Text Protocol Secure", "Hypertext Transfer Protocol Secure", "High-level Text Protocol Secure", "Hypertext Tunnel Protection Service"], 1),
+  q("Which protocol provides the security layer for HTTPS?", ["FTP", "SSH", "TLS/SSL", "SMTP"], 2),
+  q("Which port is most commonly used by HTTPS by default?", ["21", "80", "443", "8080"], 2),
+  q("Which properties does HTTPS provide?", ["Confidentiality and integrity only", "Confidentiality, integrity, and server authentication", "Only faster page loads", "Only client authentication"], 1),
+  q("What is the role of a digital certificate in HTTPS?", ["It compresses HTTP responses", "It binds a public key to a domain and is signed by a CA", "It stores user passwords", "It configures DNS records"], 1),
+  q("What does CA stand for?", ["Central Authority", "Certificate Authority", "Cipher Agency", "Content Administrator"], 1),
+  q("What is the main purpose of the TLS handshake?", ["To download all images", "To agree on cryptographic keys and verify server identity", "To minify HTML and CSS", "To clear browser cache"], 1),
+  q("What does HSTS instruct the browser to do?", ["Disable cookies", "Force future connections to use HTTPS for a period of time", "Block all JavaScript", "Use only HTTP/1.0"], 1),
+  q("What is mixed content?", ["Images and text on the same page", "Using JSON and HTML in one response", "An HTTPS page loading some resources over HTTP", "Cookies with multiple attributes"], 2),
+  q("Why is mixed active content dangerous?", ["It only slows rendering", "It is safe but ugly", "It can undermine the security of the whole page", "Browsers always ignore it"], 2),
+  q("Which indicator may browsers show for HTTPS?", ["A red warning triangle", "A lock icon or secure connection message", "A blinking bottom banner", "No visual indicator at all"], 1),
+  q("Perfect Forward Secrecy ensures that:", ["Old sessions remain protected even if long-term keys are later compromised", "Certificates never expire", "DNS queries are always encrypted", "Cookies are always HttpOnly"], 0),
+  q("Why redirect HTTP to HTTPS?", ["To avoid cookies", "To ensure traffic benefits from encryption and integrity", "To disable caching", "To simplify robots.txt"], 1),
+  q("Which is good HTTPS deployment practice?", ["Use outdated ciphers", "Use self-signed certificates publicly without explanation", "Automate certificate renewal and prefer modern TLS", "Serve HTML over HTTP and only APIs over HTTPS"], 2),
+  q("Which statement best describes HTTP and HTTPS?", ["They are completely different protocols", "HTTPS is HTTP with an added TLS layer", "HTTP is built on DNS while HTTPS is not", "HTTPS removes headers"], 1)
 ];
-/*Quiz logic */
-const quizPanel    = document.getElementById('quiz-panel');
-const quizForm     = document.getElementById('quiz-form');
-const quizTitle    = document.getElementById('quiz-title');
+
+/* ===== Quiz logic ===== */
+const quizPanel = document.getElementById('quiz-panel');
+const quizForm = document.getElementById('quiz-form');
+const quizTitle = document.getElementById('quiz-title');
 const quizSubtitle = document.getElementById('quiz-subtitle');
-const submitBtn    = document.getElementById('submit-quiz');
-const retryBtn     = document.getElementById('retry-quiz');
-const actionsRow   = document.querySelector('.quiz-actions');
-const modeButtons  = document.querySelectorAll('.quiz-mode-btn');
+const submitBtn = document.getElementById('submit-quiz');
+const retryBtn = document.getElementById('retry-quiz');
+const actionsRow = document.querySelector('.quiz-actions');
+
+/* CRITICAL FIX:
+   Select ONLY mode buttons, not every .quiz-mode-btn.
+   This prevents Submit/Try Again from accidentally starting a new quiz and causing 0%.
+*/
+const modeButtons = document.querySelectorAll('.quiz-mode-btn[data-mode]');
+
 let currentQuestions = [];
 let answered = false;
+
 function shuffle(arr) {
   return [...arr].sort(() => Math.random() - 0.5);
 }
+
 function buildPool(mode) {
-  if (mode === 'http') {
-    return shuffle(HTTP_QUESTIONS).slice(0, 15);
-  }
-  if (mode === 'seo') {
-    return shuffle(SEO_QUESTIONS).slice(0, 15);
-  }
-  if (mode === 'cookies') {
-    return shuffle(COOKIE_QUESTIONS).slice(0, 15);
-  }
-  if (mode === 'https') {
-    return shuffle(HTTPS_QUESTIONS).slice(0, 15);
-  }
-  // checkpoint: 30 questions mixed from all four topics
-  const all = [
-    ...HTTP_QUESTIONS,
-    ...SEO_QUESTIONS,
-    ...COOKIE_QUESTIONS,
-    ...HTTPS_QUESTIONS
-  ];
+  if (mode === 'http') return shuffle(HTTP_QUESTIONS).slice(0, 15);
+  if (mode === 'seo') return shuffle(SEO_QUESTIONS).slice(0, 15);
+  if (mode === 'cookies') return shuffle(COOKIE_QUESTIONS).slice(0, 15);
+  if (mode === 'https') return shuffle(HTTPS_QUESTIONS).slice(0, 15);
+
+  const all = [...HTTP_QUESTIONS, ...SEO_QUESTIONS, ...COOKIE_QUESTIONS, ...HTTPS_QUESTIONS];
   return shuffle(all).slice(0, 30);
 }
+
 function modeLabel(mode) {
   switch (mode) {
-    case 'http':       return 'Fundamentals of HTTP – Quiz';
-    case 'seo':        return 'SEOs Fundamentals – Quiz';
-    case 'cookies':    return 'Cookies Fundamentals – Quiz';
-    case 'https':      return 'Security & HTTPS – Quiz';
+    case 'http': return 'Fundamentals of HTTP – Quiz';
+    case 'seo': return 'SEOs Fundamentals – Quiz';
+    case 'cookies': return 'Cookies Fundamentals – Quiz';
+    case 'https': return 'Security & HTTPS – Quiz';
     case 'checkpoint': return 'Knowledge check – Quiz';
-    default:           return 'Quiz';
+    default: return 'Quiz';
   }
 }
+
 function modeSubtitle(mode, count) {
-  if (mode === 'checkpoint') {
-    return `Mixed knowledge check across HTTP, SEOs, Cookies, and Security & HTTPS. ${count} questions.`;
-  }
-  if (mode === 'http') {
-    return `HTTP fundamentals only. ${count} questions.`;
-  }
-  if (mode === 'seo') {
-    return `Search Engine Optimizers (SEOs) only. ${count} questions.`;
-  }
-  if (mode === 'cookies') {
-    return `Cookies and consent on the web. ${count} questions.`;
-  }
-  if (mode === 'https') {
-    return `Security & HTTPS: TLS, certificates, HSTS, and secure-by-default patterns. ${count} questions.`;
-  }
+  if (mode === 'checkpoint') return `Mixed knowledge check across HTTP, SEOs, Cookies, and Security & HTTPS. ${count} questions.`;
+  if (mode === 'http') return `HTTP fundamentals only. ${count} questions.`;
+  if (mode === 'seo') return `Search Engine Optimizers only. ${count} questions.`;
+  if (mode === 'cookies') return `Cookies and consent on the web. ${count} questions.`;
+  if (mode === 'https') return `Security & HTTPS: TLS, certificates, HSTS, and secure-by-default patterns. ${count} questions.`;
   return '';
 }
+
 function renderQuiz(mode) {
   answered = false;
   currentQuestions = buildPool(mode);
+
   quizTitle.textContent = modeLabel(mode);
   quizSubtitle.textContent = modeSubtitle(mode, currentQuestions.length);
   quizForm.innerHTML = '';
+
   currentQuestions.forEach((qObj, index) => {
     const qId = `q${index}`;
     const fieldset = document.createElement('fieldset');
     fieldset.className = 'quiz-question';
+
+    const optionsHtml = qObj.options.map((opt, optIndex) => `
+      <label class="quiz-option">
+        <input type="radio" name="${qId}" value="${optIndex}">
+        <span>${opt}</span>
+      </label>
+    `).join('');
+
     fieldset.innerHTML = `
       <legend>
         <span class="quiz-q-number">Q${index + 1}.</span>
         ${qObj.text}
       </legend>
-      ${qObj.options.map((opt, optIndex) => `
-        <label class="quiz-option">
-          <input type="radio" name="${qId}" value="${optIndex}">
-          <span>${opt}</span>
-        </label>
-      `).join('')}
+      ${optionsHtml}
     `;
+
     quizForm.appendChild(fieldset);
   });
+
   quizPanel.style.display = 'block';
   actionsRow.style.display = 'flex';
   submitBtn.style.display = 'inline-block';
   retryBtn.style.display = 'none';
+
+  window.scrollTo({ top: quizPanel.offsetTop - 80, behavior: 'smooth' });
 }
+
 modeButtons.forEach(btn => {
   btn.addEventListener('click', () => {
-    const mode = btn.dataset.mode;
-    renderQuiz(mode);
-    window.scrollTo({ top: quizPanel.offsetTop - 80, behavior: 'smooth' });
+    renderQuiz(btn.dataset.mode);
   });
 });
+
 function evaluateQuiz() {
-  if (answered) return;
+  if (answered || currentQuestions.length === 0) return;
+
   let correctCount = 0;
   const selectedAnswers = [];
+
   currentQuestions.forEach((qObj, index) => {
-    const qName = `q${index}`;
-    const selected = quizForm.querySelector(`input[name="${qName}"]:checked`);
+    const selected = quizForm.querySelector(`input[name="q${index}"]:checked`);
     const selectedIndex = selected ? Number(selected.value) : null;
     selectedAnswers.push(selectedIndex);
+
     if (selectedIndex === qObj.answerIndex) {
       correctCount++;
     }
   });
+
   const total = currentQuestions.length;
   const scorePercent = Math.round((correctCount / total) * 100);
-  let message;
-  if (scorePercent >= 90) {
-    message = "🎉 Congratulations! You scored " + scorePercent + "%. Excellent work!";
-  } else if (scorePercent >= 70) {
-    message = "✅ Well done! You scored " + scorePercent + "%. You could still polish a few areas.";
-  } else {
-    message = "📚 You scored " + scorePercent + "%. You should study more and try again.";
-  }
-  // Highlight right/wrong answers
+
   currentQuestions.forEach((qObj, index) => {
     const fieldset = quizForm.querySelectorAll('.quiz-question')[index];
-    fieldset.classList.remove('quiz-correct', 'quiz-wrong');
     const correctIdx = qObj.answerIndex;
+
+    fieldset.querySelectorAll('.quiz-option').forEach(label => {
+      label.classList.remove('quiz-option-correct', 'quiz-option-wrong');
+    });
+
     const correctInput = fieldset.querySelector(`input[value="${correctIdx}"]`);
     if (correctInput) {
       correctInput.parentElement.classList.add('quiz-option-correct');
     }
+
     const selectedIndex = selectedAnswers[index];
-    if (selectedIndex != null && selectedIndex !== correctIdx) {
+    if (selectedIndex !== null && selectedIndex !== correctIdx) {
       const wrongInput = fieldset.querySelector(`input[value="${selectedIndex}"]`);
       if (wrongInput) {
         wrongInput.parentElement.classList.add('quiz-option-wrong');
       }
     }
   });
+
+  let message;
+  if (scorePercent >= 90) {
+    message = `🎉 Congratulations! You scored ${scorePercent}%. Excellent work!`;
+  } else if (scorePercent >= 70) {
+    message = `✅ Well done! You scored ${scorePercent}%. You could still polish a few areas.`;
+  } else {
+    message = `📚 You scored ${scorePercent}%. You should study more and try again.`;
+  }
+
   showResultPopup(message);
+
   answered = true;
   submitBtn.style.display = 'none';
   retryBtn.style.display = 'inline-block';
 }
+
 submitBtn.addEventListener('click', evaluateQuiz);
+
 retryBtn.addEventListener('click', () => {
   quizForm.innerHTML = '';
   quizPanel.style.display = 'none';
   actionsRow.style.display = 'none';
+  currentQuestions = [];
+  answered = false;
 });
-/*Simple result popup*/
+
+/* ===== Result popup ===== */
 function showResultPopup(message) {
   let overlay = document.getElementById('quiz-overlay');
+
   if (!overlay) {
     overlay = document.createElement('div');
     overlay.id = 'quiz-overlay';
@@ -660,6 +401,7 @@ function showResultPopup(message) {
     overlay.style.alignItems = 'center';
     overlay.style.justifyContent = 'center';
     overlay.style.zIndex = '50';
+
     const dialog = document.createElement('div');
     dialog.id = 'quiz-dialog';
     dialog.style.maxWidth = '420px';
@@ -669,6 +411,7 @@ function showResultPopup(message) {
     dialog.style.background = 'var(--panel)';
     dialog.style.padding = '1.4rem 1.6rem';
     dialog.style.boxShadow = '0 22px 40px rgba(0,0,0,0.75)';
+
     dialog.innerHTML = `
       <h2 style="margin-top:0;">Quiz result</h2>
       <p id="quiz-result-message" class="lead"></p>
@@ -679,6 +422,7 @@ function showResultPopup(message) {
         After closing, you can review which options were correct or wrong.
       </p>
     `;
+
     overlay.appendChild(dialog);
     document.body.appendChild(overlay);
 
@@ -688,10 +432,11 @@ function showResultPopup(message) {
   } else {
     overlay.style.display = 'flex';
   }
-  const msgEl = document.getElementById('quiz-result-message');
-  msgEl.textContent = message;
+
+  document.getElementById('quiz-result-message').textContent = message;
 }
 </script>
+
 <button class="to-top" aria-label="Back to top">↑</button>
 </body>
 </html>
